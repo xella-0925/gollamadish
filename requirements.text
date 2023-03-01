@@ -1,7 +1,7 @@
 streamlit
 numpy
+scikit-learn
 matplotlib
 tensorflow
 streamlit_webrtc
 opencv-python-headless
-scipy
