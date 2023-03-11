@@ -3,6 +3,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pages.activity_1 as act1
 
+st.set_option('deprecation.showPyplotGlobalUse', False)
+
 def main():
     st.title("Midterm Exam in CCS221")
     
