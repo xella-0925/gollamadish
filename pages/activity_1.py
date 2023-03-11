@@ -1,7 +1,3 @@
-import streamlit as st
-
-st.title("Activity 1")
-
 import matplotlib.pyplot as plt
 plt.xlabel("X Axis")
 plt.ylabel("Y Axis")
@@ -67,7 +63,6 @@ def midpoint(x1, y1, x2, y2):
     plt.show()
 
 def main ():
-    print("DDA Line Algorithm")
     plt.title("DDA Line Algorithm")
     x=int(input("Enter X1:"))
     y=int(input("Enter Y1:"))
