@@ -46,7 +46,7 @@ def midpoint(x1, y1, x2, y2):
     x = x1
     y = y1
 
-    print(f"x = {x}, y = {y}")
+   #print(f"x = {x}, y = {y}")
     xcoordinates = [x]
     ycoordinates = [y]
 
@@ -77,7 +77,7 @@ color = "r."
 fig = DDALine(x, y, xEnd, yEnd, color)
 plt.show()
 
-print("Bresenham Line Algorithm")
+#print("Bresenham Line Algorithm")
 plt.title("Bresenham Line Algorithm")
 x1 = int(input("Enter X1: "))
 y1 = int(input("Enter Y1: "))
@@ -87,7 +87,7 @@ color = "r"
 
 bresenham(x1, y1, x2, y2, color)
 
-print("Midpoint Line Algorithm")
+#print("Midpoint Line Algorithm")
 plt.title("Midpoint Line Algorithm")
 x1 = int(input("Enter X1: "))
 y1 = int(input("Enter Y1: "))
