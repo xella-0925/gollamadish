@@ -3,6 +3,7 @@ plt.xlabel("X Axis")
 plt.ylabel("Y Axis")
 
 def DDALine (x1, y1, x2, y2, color):
+    fig = plt.figure()
     dx = x2 -x1
     dy = y2 -y1
 
@@ -15,10 +16,11 @@ def DDALine (x1, y1, x2, y2, color):
         plt.plot(int(x1), int(y1), color)
         x1 += Xinc
         y1 += Yinc
-    plt.show()
+    
+    return fig
 
 def bresenham(x1, y1, x2, y2, color):
- 
+    fig = plt.figure()
     m_new = 2 * (y2 - y1)
     slope_error_new = m_new - (x2 - x1)
  
@@ -32,10 +34,11 @@ def bresenham(x1, y1, x2, y2, color):
             y1 += 1
             slope_error_new = slope_error_new - 2 * (x2 - x1)
     plt.plot(int(x1), int(y1), color, marker = 's', markersize = 5)
-    plt.show()
     
+    return fig
 
 def midpoint(x1, y1, x2, y2):
+    fig = plt.figure()
     dx = x2 - x1
     dy = y2 - y1
 
@@ -60,7 +63,7 @@ def midpoint(x1, y1, x2, y2):
         ycoordinates.append(y)
         print(f"x = {x}, y = {y}")
     plt.plot(xcoordinates, ycoordinates)
-    plt.show()
+    return fig
 
 def main ():
     plt.title("DDA Line Algorithm")
