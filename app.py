@@ -19,5 +19,11 @@ def main():
     st.pyplot(act1.bresenham(_act1_x0, _act1_y0, _act1_x1, _act1_y1, 'ro'))
     st.subheader("Midpoint Line Algorithm")
     st.pyplot(act1.midpoint(_act1_x0, _act1_y0, _act1_x1, _act1_y1, 'ro'))
+
+        if st.button("Exit"):
+        st.stop()
+
+if  __name__ == "__main__":
+    main()
     
 
