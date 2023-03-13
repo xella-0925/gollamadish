@@ -65,7 +65,7 @@ def main():
     st.write('File Path: ', _act3_filepath)
     act3_image = cv2.cvtColor(cv2.imread(_act3_filepath), cv2.COLOR_BGR2RGB)
     st.write('Original Image:')
-    st.pyplot(act3.visualize(task3_image))
+    st.pyplot(act3.visualize(act3_image))
     st.write('Image Transformations: ', *_act3_transformations)
     
     if st.button("Exit"):
