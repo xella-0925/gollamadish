@@ -16,7 +16,7 @@ def plt_grph(transformed_img_): #create a function to plot transformed image ima
     plt.axis('off') #hide axes and borders
     plt.imshow(transformed_img_) #display data as an image
     
-  def translate (img_, rows, cols): #create def function to translate image and define its parameters.
+ def translate (img_, rows, cols): #create def function to translate image and define its parameters.
     m_translation_ = np.float32 ([[1, 0, 100], #create an array to determine the number of rows and columns of an image.
                                   [0, 1, 50],
                                   [0, 0, 1]])
