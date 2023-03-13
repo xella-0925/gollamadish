@@ -61,8 +61,8 @@ def main():
 
     st.header("Activity 3")
     st.subheader("Image Transformations")
-    st.pyplot(act3.image_transformations(_act3_filepath, _act3_transformations, _act3_translated_imgx, \\
-                                      _act3_translated_imgy, _act3_reflected_imgx, _act3_reflected_imgy, \\
+    st.pyplot(act3.image_transformations(_act3_filepath, _act3_transformations, _act3_translated_imgx, \
+                                      _act3_translated_imgy, _act3_reflected_imgx, _act3_reflected_imgy, \
                                       _act3_rotated_img, _act3_scaled_img, _act3_sheared_imgx, _act3_sheared_imgy))
 
     if st.button("Exit"):
