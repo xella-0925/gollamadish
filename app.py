@@ -61,10 +61,12 @@ def main():
 
     st.header("Activity 3")
     st.subheader("Image Transformations")
-    st.pyplot(act3.image_transformations(_act3_filepath, _act3_transformations, _act3_translated_imgx, \
-                                      _act3_translated_imgy, _act3_reflected_imgx, _act3_reflected_imgy, \
-                                      _act3_rotated_img, _act3_scaled_img, _act3_sheared_imgx, _act3_sheared_imgy))
-
+    st.write('File Path: ', _act3_filepath)
+    act3_image = cv2.cvtColor(cv2.imread(_act3_filepath), cv2.COLOR_BGR2RGB)
+    st.write('Original Image:')
+    st.pyplot(act3.visualize(task3_image))
+    st.write('Image Transformations: ', *_act3_transformations)
+    
     if st.button("Exit"):
         st.stop()
 
