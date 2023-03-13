@@ -33,18 +33,6 @@ def fill(x, y, replace): # changes the color of one desired position (x,y) you w
     
 def main(): #displays & prompt user input, including the instructions or neccesarry informtaion the user has to know. 
     
-    print("X,Y        X,Y       X,Y")
-    print("------------------------")
-    print("0,0        0,1       0,2")
-    print("1,0        1,1       1,2")
-    print("2,0        2,1       2,2")
-    
-    print()
-    
-    x = int(input("Enter X: "))
-    y = int(input("Enter Y: "))
-    replace = int(input("Enter Color (1-1000): "))
-    
     fill(x, y, replace) #call function fill to main to plot the matrix. 
 
 
