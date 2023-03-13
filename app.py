@@ -29,9 +29,9 @@ def main():
     st.subheader("Midpoint Line Algorithm")
     st.pyplot(act1.midpoint(_act1_x0, _act1_y0, _act1_x1, _act1_y1))
     
-    st.header("Task 2")
+    st.header("Activity 2")
     st.subheader("Change a pixel's color")
-    st.pyplot(task2.fill(_task2_x, _task2_y, _task2_hue))
+    st.pyplot(act2.fill(_task2_x, _task2_y, _task2_hue))
        
     if st.button("Exit"):
         st.stop()
