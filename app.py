@@ -31,7 +31,7 @@ def main():
     
     st.header("Activity 2")
     st.subheader("Change a pixel's color")
-    st.pyplot(act2.fill(_task2_x, _task2_y, _task2_hue))
+    st.pyplot(act2.fill(_act2_x, _act2_y, _act2_hue))
        
     if st.button("Exit"):
         st.stop()
