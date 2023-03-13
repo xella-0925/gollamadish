@@ -42,7 +42,7 @@ def main():
     if 'scale' in _act3_transformations:
         _act3_scale = st.sidebar.slider('Scale', 0, 5, 1)
         
-    if 'shear' in _task3_transformations:
+    if 'shear' in _act3_transformations:
         _act3_shearx = st.sidebar.slider('X Shear', 0, 5, 1)
         _act3_sheary = st.sidebar.slider('Y Shear', 0, 5, 1)
                 
