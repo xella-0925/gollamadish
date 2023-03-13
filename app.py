@@ -20,6 +20,8 @@ def main():
     _act2_x, _act2_y, _act2_hue = st.sidebar.slider('X coordinate', 0, 2, 0, 1), \
                                      st.sidebar.slider('Y coordinate', 0, 2, 0, 1), \
                                      st.sidebar.slider('Hue', 0, 100, 50)
+    st.sidebar.header("Image transformations")
+    _act3_filepath = st.sidebar.text_input('Enter file path: ')
     
     st.header("Activity 1")
     st.subheader("DDA Line Algorithm")
