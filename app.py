@@ -10,10 +10,10 @@ def main():
     st.title("Midterm Exam in CCS221")
     
     st.sidebar.header("Line Algorithm Parameters")
-    _act1_x0, _act1_y0, _act1_x1, _act1_y1 = st.sidebar.slider('Starting X', 1, 500), \
-                     st.sidebar.slider('Starting Y', 1, 10), \
-                     st.sidebar.slider('Ending X', 1, 10), \
-                     st.sidebar.slider('Ending Y', 1, 10)
+    _act1_x0, _act1_y0, _act1_x1, _act1_y1 = st.sidebar.slider('Starting X', 1, 100), \
+                     st.sidebar.slider('Starting Y', 1, 100), \
+                     st.sidebar.slider('Ending X', 1, 100, 10), \
+                     st.sidebar.slider('Ending Y', 1, 100, 10)
     
     st.header("Activity 2")
     st.sidebar.header("Change Pixel Hue Parameters")
