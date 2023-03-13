@@ -17,7 +17,6 @@ def main():
                      st.sidebar.slider('Ending X', 1, 100, 10), \
                      st.sidebar.slider('Ending Y', 1, 100, 10)
 
-    st.header("Activity 2")
     st.sidebar.header("Change Pixel Hue Parameters")
     _act2_x, _act2_y, _act2_hue = st.sidebar.slider('X coordinate', 0, 2, 0, 1), \
                                      st.sidebar.slider('Y coordinate', 0, 2, 0, 1), \
