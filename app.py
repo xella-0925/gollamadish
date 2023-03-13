@@ -23,28 +23,28 @@ def main():
                                      st.sidebar.slider('Hue', 0, 100, 50)
     
     st.sidebar.header("Image transformations")
-    _act3_filepath = st.sidebar.text_input('Enter file path: ', 'pages/bini.jpg')
+    _act3_filepath = st.sidebar.text_input('Enter file path: ', 'pages/biniarms.webp')
     
     _act3_transformations = st.sidebar.multiselect('Select tranformations to apply: ', \
                             ['translate', 'rotate', 'reflect', 'scale', 'shear'])
 
     if 'translate' in _act3_transformations:
-        _act3_translationx = st.sidebar.slider('X Translation', 0, 1000)
-        _act3_translationy = st.sidebar.slider('Y Translation', 0, 1000)
+        _act3_translated_imgx = st.sidebar.slider('X Translation', 0, 1000)
+        _act3_translated_imgy = st.sidebar.slider('Y Translation', 0, 1000)
         
     if 'reflect' in _act3_transformations:
-        _act3_reflectionx = st.sidebar.checkbox('Reflect along x axis')
-        _act3_reflectiony = st.sidebar.checkbox('Reflect along y axis')
+        _act3_reflected_imgx = st.sidebar.checkbox('Reflect along x axis')
+        _act3_reflected_imgy = st.sidebar.checkbox('Reflect along y axis')
         
     if 'rotate' in _act3_transformations:
-        _act3_rotation = st.sidebar.slider('Rotation', -360, 360, 0)
+        _act3_rotated_img = st.sidebar.slider('Rotation', -360, 360, 0)
         
     if 'scale' in _act3_transformations:
-        _act3_scale = st.sidebar.slider('Scale', 0, 5, 1)
+        _act3_scaled_img = st.sidebar.slider('Scale', 0, 5, 1)
         
     if 'shear' in _act3_transformations:
-        _act3_shearx = st.sidebar.slider('X Shear', 0, 5, 1)
-        _act3_sheary = st.sidebar.slider('Y Shear', 0, 5, 1)
+        _act3_sheared_imgx = st.sidebar.slider('X Shear', 0, 5, 1)
+        _act3_sheared_imgy = st.sidebar.slider('Y Shear', 0, 5, 1)
                 
    
     st.header("Activity 1")
