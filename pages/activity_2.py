@@ -13,10 +13,6 @@ two_d_arr = np.array([[100, 100, 100],  # the numbers inside the array determine
                       [100, 100, 100],  # as well as the number of rows & columns)
                       [100, 100, 100]])
     
-x = [] #initialization of variables
-y = []
-replace = []
-    
 def fill(x, y, replace): # changes the color of one desired position (x,y) you wish to plot in plot area
     
     fig = plt.figure()
