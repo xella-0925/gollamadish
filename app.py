@@ -11,21 +11,21 @@ def main():
     st.title("Midterm Exam in CCS221")
 
     st.sidebar.header("Line Algorithm Parameters")
-    _act1_x0, _act1_y0, _act1_x1, _act1_y1 = st.sidebar.slider('Starting X', 1, 100), \\
-                     st.sidebar.slider('Starting Y', 1, 100), \\
-                     st.sidebar.slider('Ending X', 1, 100, 10), \\
+    _act1_x0, _act1_y0, _act1_x1, _act1_y1 = st.sidebar.slider('Starting X', 1, 100), \
+                     st.sidebar.slider('Starting Y', 1, 100), \
+                     st.sidebar.slider('Ending X', 1, 100, 10), \
                      st.sidebar.slider('Ending Y', 1, 100, 10)
 
     st.header("Activity 2")
     st.sidebar.header("Change Pixel Hue Parameters")
-    _act2_x, _act2_y, _act2_hue = st.sidebar.slider('X coordinate', 0, 2, 0, 1), \\
-                                     st.sidebar.slider('Y coordinate', 0, 2, 0, 1), \\
+    _act2_x, _act2_y, _act2_hue = st.sidebar.slider('X coordinate', 0, 2, 0, 1), \
+                                     st.sidebar.slider('Y coordinate', 0, 2, 0, 1), \
                                      st.sidebar.slider('Hue', 0, 100, 50)
 
     st.sidebar.header("Image transformations")
     _act3_filepath = st.sidebar.text_input('Enter file path: ', 'pages/biniarms.webp')
 
-    _act3_transformations = st.sidebar.multiselect('Select tranformations to apply: ', \\
+    _act3_transformations = st.sidebar.multiselect('Select tranformations to apply: ', \
                             ['translate', 'rotate', 'reflect', 'scale', 'shear'])
 
     if 'translate' in _act3_transformations:
