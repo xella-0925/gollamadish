@@ -1,7 +1,5 @@
 import streamlit as st
 
-st.title("Activity 2")
-
 import numpy as np #Import libraries needed
 import cv2
 import matplotlib.pyplot as plt
