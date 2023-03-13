@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pages.activity_1 as act1
 import pages.activity_2 as act2
+import pages.activity_2 as act3
 
 st.set_option('deprecation.showPyplotGlobalUse', False)
 
@@ -20,9 +21,10 @@ def main():
     _act2_x, _act2_y, _act2_hue = st.sidebar.slider('X coordinate', 0, 2, 0, 1), \
                                      st.sidebar.slider('Y coordinate', 0, 2, 0, 1), \
                                      st.sidebar.slider('Hue', 0, 100, 50)
-    st.sidebar.header("Image transformations")
-    _act3_filepath = st.sidebar.text_input('Enter file path: ')
     
+    st.sidebar.header("Image transformations")
+    _act3_filepath = st.sidebar.text_input('Enter file path: ', 'pages/bini.jpg')
+   
     st.header("Activity 1")
     st.subheader("DDA Line Algorithm")
     st.pyplot(act1.DDALine(_act1_x0, _act1_y0, _act1_x1, _act1_y1, 'ro'))
