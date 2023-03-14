@@ -3,8 +3,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 import cv2
 import pages.activity_1 as act1
-import pages.activity_2 as act2
-import pages.activity_3 as act3
+#import pages.activity_2 as act2
+#import pages.activity_3 as act3
 
 st.set_option('deprecation.showPyplotGlobalUse', False)
 #st.set_option ('browser.gatherUsageStats' , False)
@@ -57,17 +57,7 @@ def main():
     st.subheader("Midpoint Line Algorithm")
     st.pyplot(act1.midpoint(_act1_x0, _act1_y0, _act1_x1, _act1_y1))
 
-    st.header("Activity 2")
-    st.subheader("Change a pixel's color")
-    st.pyplot(act2.fill(_act2_x, _act2_y, _act2_hue))
-
-    st.header("Activity 3")
-    st.subheader("Image Transformations")
-    st.write('File Path: ', _act3_filepath)
-    act3_image = cv2.cvtColor(cv2.imread(_act3_filepath), cv2.COLOR_BGR2RGB)
-    st.write('Original Image:')
-    st.pyplot(act3.visualize(act3_image))
-    st.write('Image Transformations: ', *_act3_transformations)
+   
     
     if st.button("Exit"):
         st.stop()
