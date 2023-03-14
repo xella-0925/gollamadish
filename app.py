@@ -3,9 +3,9 @@ import matplotlib.pyplot as plt
 import numpy as np
 from PIL import Image
 import cv2
-import pages.activity_1.py as task1
-import pages.activity_2.py as task2
-import pages.activity_3.py as task3
+import pages.activity_1 as task1
+import pages.activity_2 as task2
+import pages.activity_3 as task3
 
 def main():
     st.title("Midterm Exam in CCS221")
