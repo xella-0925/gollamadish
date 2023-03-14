@@ -1,37 +1,86 @@
-import numpy as np
 import matplotlib.pyplot as plt
+plt.xlabel("X Axis")
+plt.ylabel("Y Axis")
 
-_arr_2d = np.array([[1, 0, 1]
-                   , [0, 0, 0]
-                   , [1, 0, 1]])
-
-def change(x, y, color):
-    '''
-    Changes a specific coordinate to a hue of preset color
-
-    Parameters
-    ----------
-    x : int
-        x coordinate
-    y : int
-        y coordinate
-    color : int
-        hue of color
-    '''
-    
+def DDALine (x1, y1, x2, y2, color):
     fig = plt.figure()
-    for i in range(len(_arr_2d)):
-        for j in range(len(_arr_2d)):
-            _arr_2d[x][y] = color
+    dx = x2 -x1
+    dy = y2 -y1
 
-    img = plt.imshow(_arr_2d, cmap='rainbow', interpolation='none')
-    img.set_clim([0, 100])
-    plt.colorbar()
+    steps = abs(dx) if abs(dx) > abs(dy) else abs(dy)
+
+    Xinc = float (dx / steps)
+    Yinc = float (dx / steps)
+
+    for i in range(0, int(steps +1)):
+        plt.plot(int(x1), int(y1), color)
+        x1 += Xinc
+        y1 += Yinc
     
     return fig
 
-def main():
-    change(2, 1, 85)
+def bresenham(x1, y1, x2, y2, color):
+    fig = plt.figure()
+    m_new = 2 * (y2 - y1)
+    slope_error_new = m_new - (x2 - x1)
+ 
+    y2 = y1
+    for x1 in range(x1, x2+1):
+        slope_error_new = slope_error_new + m_new
+
+        if (slope_error_new >= 0):
+          
+            x1 += 1
+            y1 += 1
+            slope_error_new = slope_error_new - 2 * (x2 - x1)
+    plt.plot(int(x1), int(y1), color, marker = 's', markersize = 5)
     
-if __name__=="__main__":
+    return fig
+
+def midpoint(x1, y1, x2, y2):
+    fig = plt.figure()
+    dx = x2 - x1
+    dy = y2 - y1
+
+    d  = dy - (dx/2)
+    x = x1
+    y = y1
+
+   #print(f"x = {x}, y = {y}")
+    xcoordinates = [x]
+    ycoordinates = [y]
+
+    while (x<x2):
+        x = x + 1
+        if (d<0):
+            d = d + dy
+
+        else:
+            d = d + (dy - dx)
+            y = y + 1
+
+        xcoordinates.append(x)
+        ycoordinates.append(y)
+        print(f"x = {x}, y = {y}")
+    plt.plot(xcoordinates, ycoordinates)
+    return fig
+
+def main ():
+
+    plt.title("DDA Line Algorithm")
+x=int(input("Enter X1:"))
+y=int(input("Enter Y1:"))
+xEnd= int(input("Enter X2:"))
+yEnd = int(input("Enter Y2:"))
+color = "#aa2533"
+
+fig = DDALine(x, y, xEnd, yEnd, color)
+plt.show()
+
+bresenham(x, y, xEnd, yEnd, color)
+
+midpoint(x, y, xEnd, yEnd, color)
+
+    
+if __name__=='__main__':
     main()
