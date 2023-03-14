@@ -29,7 +29,8 @@ def fill(x, y, replace): # changes the color of one desired position (x,y) you w
     
 def main(): #displays & prompt user input, including the instructions or neccesarry informtaion the user has to know. 
     
-    # fill(5, 4, 25) #call function fill to main to plot the matrix. 
+    # fill(5, 4, 25) #call function fill to main to plot the matrix.
+    pass
     
 
 
