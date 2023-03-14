@@ -2,40 +2,77 @@ import cv2
 import numpy as np
 import matplotlib.pyplot as plt
 
-def translated_img(img, x, y):
-
-    m_translation = np.float32([[1, 0, x],
-                     [0, 1, y]])
-    translated_img = cv2.warpAffine(img, m_translation, (img.shape[1], img.shape[0]))
-    return translated_img
-
-def rotated_img(img, θ):
- 
-    m_rotation = cv2.getRotationMatrix2D((img.shape[1] // 2, img.shape[0] // 2), θ, 1.0)
-    rotated_img = cv2.warpAffine(img, m_rotation, (img.shape[1], img.shape[0]))
-    return rotated_img
-
-def scaled_img(img, scale):
-
-    m_scaled = np.float32([[scale, 0, 0],
-                    [0, scale, 0]])
-    scaled_img = cv2.warpAffine(img, m_scaled, (img.shape[1], img.shape[0]))
-    return scaled_imgm_scaled
-
-def sheared_img(img, x, y):
+def translate(img, x, y):
+    '''
+    Translates an image (img) along the x and y axes by (x, y) pixels.
+    Returns the translated image.
     
-    m_sheared = np.float32([[1, x, 0],
+    Parameters:
+    img: image to be translated
+    x: number of pixels to translate the image along the x axis
+    y: number of pixels to translate the image along the y axis
+    '''
+    M = np.float32([[1, 0, x],
+                     [0, 1, y]])
+    translated = cv2.warpAffine(img, M, (img.shape[1], img.shape[0]))
+    return translated
+
+def rotate(img, theta):
+    '''
+    Rotates an image (img) by an angle (theta) in degrees.
+    Returns the rotated image.
+    
+    Parameters:
+    img: image to be rotated
+    theta: angle in degrees to rotate the image
+    '''
+    M = cv2.getRotationMatrix2D((img.shape[1] // 2, img.shape[0] // 2), theta, 1.0)
+    rotated = cv2.warpAffine(img, M, (img.shape[1], img.shape[0]))
+    return rotated
+
+def scale(img, scale):
+    '''
+    Scales an image (img) by a factor of (scale).
+    Returns the scaled image.
+    
+    Parameters:
+    img: image to be scaled
+    scale: factor to scale the image by
+    '''
+    M = np.float32([[scale, 0, 0],
+                    [0, scale, 0]])
+    scaled = cv2.warpAffine(img, M, (img.shape[1], img.shape[0]))
+    return scaled
+
+def shear(img, x, y):
+    '''
+    Shears an image (img) by a factor to its length (y) and width (w).
+    Returns the sheared image.
+    
+    Parameters:
+    img: image to be sheared
+    x: factor to shear the image along the x axis
+    y: factor to shear the image along the y axis
+    '''
+    M = np.float32([[1, x, 0],
                     [y, 1, 0]])
-    sheared_img = cv2.warpAffine(img, m_sheared, (img.shape[1], img.shape[0]))
-    return sheared_img
+    sheared = cv2.warpAffine(img, M, (img.shape[1], img.shape[0]))
+    return sheared
 
-def reflected_img(img, axis):
-
+def reflect(img, axis):
+    '''
+    Reflects an image (img) along an axis (axis).
+    Returns the reflected image.
+    
+    Parameters:
+    img: image to be reflected
+    axis: axis to reflect the image along
+    '''
     if 'x' in axis.lower():
-        reflected_img = cv2.flip(img, 1)
+        reflected = cv2.flip(img, 1)
     if 'y' in axis.lower():
-        reflected_img = cv2.flip(img, 0)
-    return reflected_img
+        reflected = cv2.flip(img, 0)
+    return reflected
 
 def visualize(img):
     fig = plt.figure()
@@ -44,6 +81,13 @@ def visualize(img):
     return fig
 
 def multiple_image_load():
+    '''
+    Loads multiple images from a list of image paths (img_paths).
+    Returns a list of images.
+    
+    Parameters:
+    img_paths: list of image paths
+    '''
     
     images, img_paths = [], []
     c = int(input('Enter number of files: '))
@@ -54,7 +98,13 @@ def multiple_image_load():
     return images
 
 def images_transform(*images):
+    '''
+    Transforms multiple images (images) using the functions defined above.
+    Prompts the user to enter the parameters for each transformation.
     
+    Parameters:
+    images: list of images to be transformed
+    '''
 
     transformations = input('Enter transformations to apply to images: ')
     
@@ -63,19 +113,19 @@ def images_transform(*images):
         visualize(img)
         if 'translate' in transformations.lower():
             print('Translated Image')
-            visualize(translated_img(img, int(input('Enter x translation: ')), int(input('Enter y translation: '))))
+            visualize(translate(img, int(input('Enter x translation: ')), int(input('Enter y translation: '))))
         if 'rotate' in transformations.lower():
             print('Rotated Image')
-            visualize(rotated_img(img, float(input('Enter rotation angle: '))))
+            visualize(rotate(img, float(input('Enter rotation angle: '))))
         if 'scale' in transformations.lower():
             print('Scaled Image')
-            visualize(scaled_img(img, float(input('Enter scale factor: '))))
+            visualize(scale(img, float(input('Enter scale factor: '))))
         if 'shear' in transformations.lower():
             print('Sheared Image')
-            visualize(sheared_img(img, float(input('Enter x shear factor: ')), float(input('Enter y shear factor: '))))
+            visualize(shear(img, float(input('Enter x shear factor: ')), float(input('Enter y shear factor: '))))
         if 'reflect' in transformations.lower():
             print('Reflected Image')
-            visualize(reflected_img(img, input('Enter axis to reflect image along: ')))
+            visualize(reflect(img, input('Enter axis to reflect image along: ')))
             
 def main():
     # img = cv2.imread('images/img1.webp')
