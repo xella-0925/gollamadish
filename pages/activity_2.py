@@ -17,7 +17,7 @@ def fill(x, y, replace): # changes the color of one desired position (x,y) you w
     
     fig = plt.figure()
     for i in range(len(two_d_arr)):
-        for j in range(len(two_d_arr[i])):
+        for j in range(len(two_d_arr)):
             two_d_arr[x][y] = replace
             
     img = plt.imshow(two_d_arr)
@@ -29,11 +29,7 @@ def fill(x, y, replace): # changes the color of one desired position (x,y) you w
     
 def main(): #displays & prompt user input, including the instructions or neccesarry informtaion the user has to know. 
     
-    # fill(5, 4, 25) #call function fill to main to plot the matrix.
-    pass
+    fill(5, 4, 25) #call function fill to main to plot the matrix.
     
-
-
-
 if __name__ == '__main__':
     main()
