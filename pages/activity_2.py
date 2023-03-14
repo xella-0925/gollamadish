@@ -1,35 +1,25 @@
-import streamlit as st
-
-st.title("Activity 2")
-
-#activity 2 
-#submitted by: group RAM (Reycel Sarmiento, Angelica Nava, Mariane Torreverde) BSCS 1-A
-
-
 import numpy as np
 import matplotlib.pyplot as plt
 
-two_d_arr = np.array([[100, 100, 100],  # the numbers inside the array determine the color of the plot area (background), 
-                      [100, 100, 100],  # as well as the number of rows & columns)
-                      [100, 100, 100]])
-    
-def fill(x, y, color): # changes the color of one desired position (x,y) you wish to plot in plot area
+two_d_arr = np.array([[1, 0, 1]
+                   , [0, 0, 0]
+                   , [1, 0, 1]])
+
+def fill(x, y, color):
     
     fig = plt.figure()
-    for i in range(len(two_d_arr)):
+    for i in range(len(two_d_ar,r)):
         for j in range(len(two_d_arr)):
             two_d_arr[x][y] = color
-            
-    img = plt.imshow(two_d_arr)
-    img.set_clim([1,1000])
+
+    img = plt.imshow(two_d_arr, cmap='rainbow', interpolation='none')
+    img.set_clim([0, 100])
     plt.colorbar()
     
     return fig
+
+def main():
+    fill(2, 1, 85)
     
-    
-def main(): #displays & prompt user input, including the instructions or neccesarry informtaion the user has to know. 
-    
-    fill(1, 4, 45) #call function fill to main to plot the matrix.
-    
-if __name__ == '__main__':
+if __name__=="__main__":
     main()
