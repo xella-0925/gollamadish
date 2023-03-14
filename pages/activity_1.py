@@ -72,15 +72,30 @@ x=int(input("Enter X1:"))
 y=int(input("Enter Y1:"))
 xEnd= int(input("Enter X2:"))
 yEnd = int(input("Enter Y2:"))
-color = "#aa2533"
+color = "r."
 
 fig = DDALine(x, y, xEnd, yEnd, color)
 plt.show()
 
-bresenham(x, y, xEnd, yEnd, color)
+#print("Bresenham Line Algorithm")
+plt.title("Bresenham Line Algorithm")
+x1 = int(input("Enter X1: "))
+y1 = int(input("Enter Y1: "))
+x2 = int(input("Enter X2: "))
+y2 = int(input("Enter Y2: "))
+color = "r"
 
-midpoint(x, y, xEnd, yEnd, color)
+bresenham(x1, y1, x2, y2, color)
 
+#print("Midpoint Line Algorithm")
+plt.title("Midpoint Line Algorithm")
+x1 = int(input("Enter X1: "))
+y1 = int(input("Enter Y1: "))
+x2 = int(input("Enter X2: "))
+y2 = int(input("Enter Y2: "))
+color = "b"
+
+midpoint(x1, y1, x2, y2)
     
 if __name__=='__main__':
     main()
