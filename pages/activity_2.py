@@ -13,12 +13,12 @@ two_d_arr = np.array([[100, 100, 100],  # the numbers inside the array determine
                       [100, 100, 100],  # as well as the number of rows & columns)
                       [100, 100, 100]])
     
-def fill(x, y, replace): # changes the color of one desired position (x,y) you wish to plot in plot area
+def fill(x, y, color): # changes the color of one desired position (x,y) you wish to plot in plot area
     
     fig = plt.figure()
     for i in range(len(two_d_arr)):
         for j in range(len(two_d_arr)):
-            two_d_arr[x][y] = replace
+            two_d_arr[x][y] = color
             
     img = plt.imshow(two_d_arr)
     img.set_clim([1,1000])
@@ -29,7 +29,7 @@ def fill(x, y, replace): # changes the color of one desired position (x,y) you w
     
 def main(): #displays & prompt user input, including the instructions or neccesarry informtaion the user has to know. 
     
-    fill(x, y, replace) #call function fill to main to plot the matrix.
+    fill(1, 4, 45) #call function fill to main to plot the matrix.
     
 if __name__ == '__main__':
     main()
