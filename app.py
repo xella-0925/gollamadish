@@ -18,35 +18,35 @@ def main():
                      st.sidebar.slider('Ending X', 1, 100, 10), \
                      st.sidebar.slider('Ending Y', 1, 100, 10)
 
-    st.header("Activity 2")
-    st.sidebar.header("Change Pixel Hue Parameters")
-    _act2_x, _act2_y, _act2_hue = st.sidebar.slider('X coordinate', 0, 2, 0, 1), \
-                                     st.sidebar.slider('Y coordinate', 0, 2, 0, 1), \
-                                     st.sidebar.slider('Hue', 0, 100, 50)
+    #st.header("Activity 2")
+    #st.sidebar.header("Change Pixel Hue Parameters")
+    #_act2_x, _act2_y, _act2_hue = st.sidebar.slider('X coordinate', 0, 2, 0, 1), \
+                                     #st.sidebar.slider('Y coordinate', 0, 2, 0, 1), \
+                                     #st.sidebar.slider('Hue', 0, 100, 50)
 
-    st.sidebar.header("Image transformations")
-    _act3_filepath = st.sidebar.text_input('Enter file path: ', 'pages/biniarms.webp')
+    #st.sidebar.header("Image transformations")
+    #_act3_filepath = st.sidebar.text_input('Enter file path: ', 'pages/biniarms.webp')
 
-    _act3_transformations = st.sidebar.multiselect('Select tranformations to apply: ', \
-                            ['translate', 'rotate', 'reflect', 'scale', 'shear'])
+    #_act3_transformations = st.sidebar.multiselect('Select tranformations to apply: ', \
+                            #['translate', 'rotate', 'reflect', 'scale', 'shear'])
 
-    if 'translate' in _act3_transformations:
-        _act3_translated_imgx = st.sidebar.slider('X Translation', 0, 1000)
-        _act3_translated_imgy = st.sidebar.slider('Y Translation', 0, 1000)
+    #if 'translate' in _act3_transformations:
+        #_act3_translated_imgx = st.sidebar.slider('X Translation', 0, 1000)
+        #_act3_translated_imgy = st.sidebar.slider('Y Translation', 0, 1000)
 
-    if 'reflect' in _act3_transformations:
-        _act3_reflected_imgx = st.sidebar.checkbox('Reflect along x axis')
-        _act3_reflected_imgy = st.sidebar.checkbox('Reflect along y axis')
+    #if 'reflect' in _act3_transformations:
+        #_act3_reflected_imgx = st.sidebar.checkbox('Reflect along x axis')
+        #_act3_reflected_imgy = st.sidebar.checkbox('Reflect along y axis')
 
-    if 'rotate' in _act3_transformations:
-        _act3_rotated_img = st.sidebar.slider('Rotation', -360, 360, 0)
+    #if 'rotate' in _act3_transformations:
+        #_act3_rotated_img = st.sidebar.slider('Rotation', -360, 360, 0)
 
-    if 'scale' in _act3_transformations:
-        _act3_scaled_img = st.sidebar.slider('Scale', 0, 5, 1)
+    #if 'scale' in _act3_transformations:
+        #_act3_scaled_img = st.sidebar.slider('Scale', 0, 5, 1)
 
-    if 'shear' in _act3_transformations:
-        _act3_sheared_imgx = st.sidebar.slider('X Shear', 0, 5, 1)
-        _act3_sheared_imgy = st.sidebar.slider('Y Shear', 0, 5, 1)
+    #if 'shear' in _act3_transformations:
+        #_act3_sheared_imgx = st.sidebar.slider('X Shear', 0, 5, 1)
+        #_act3_sheared_imgy = st.sidebar.slider('Y Shear', 0, 5, 1)
 
 
     st.header("Activity 1")
@@ -57,17 +57,17 @@ def main():
     st.subheader("Midpoint Line Algorithm")
     st.pyplot(act1.midpoint(_act1_x0, _act1_y0, _act1_x1, _act1_y1))
 
-    st.header("Activity 2")
-    st.subheader("Change a pixel's color")
-    st.pyplot(act2.fill(_act2_x, _act2_y, _act2_hue))
+    #st.header("Activity 2")
+    #st.subheader("Change a pixel's color")
+    #st.pyplot(act2.fill(_act2_x, _act2_y, _act2_hue))
 
-    st.header("Activity 3")
-    st.subheader("Image Transformations")
-    st.write('File Path: ', _act3_filepath)
-    act3_image = cv2.cvtColor(cv2.imread(_act3_filepath), cv2.COLOR_BGR2RGB)
-    st.write('Original Image:')
-    st.pyplot(act3.visualize(act3_image))
-    st.write('Image Transformations: ', *_act3_transformations)
+    #st.header("Activity 3")
+    #st.subheader("Image Transformations")
+    #st.write('File Path: ', _act3_filepath)
+    #act3_image = cv2.cvtColor(cv2.imread(_act3_filepath), cv2.COLOR_BGR2RGB)
+    #st.write('Original Image:')
+    #st.pyplot(act3.visualize(act3_image))
+    #st.write('Image Transformations: ', *_act3_transformations)
     
     if st.button("Exit"):
         st.stop()
