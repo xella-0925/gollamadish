@@ -3,9 +3,9 @@ import matplotlib.pyplot as plt
 import numpy as np
 from PIL import Image
 import cv2
-import Exercises.TASK_1 as task1
-import Exercises.TASK_2 as task2
-import Exercises.TASK_3 as task3
+import pages.activity_1 as task1
+import pages.activity_2 as task2
+import pages.activity_3 as task3
 
 def main():
     st.title("Midterm Exam in CCS221")
@@ -75,20 +75,19 @@ def main():
         st.pyplot(task3.visualize(task3_image))
         st.write('Image Transformations: ', *_task3_transformations)
         for transformation in _task3_transformations:
-            match transformation:
-                case 'translate':
+                if 'translate':
                     st.write("Translation")
                     st.pyplot(task3.visualize(task3.translate(task3_image, _task3_translationx, _task3_translationy)))
-                case 'rotate':
+                if 'rotate':
                     st.write("Rotation")
                     st.pyplot(task3.visualize(task3.rotate(task3_image, _task3_rotation)))
-                case 'reflect':
+                if 'reflect':
                     st.write("Reflect")
                     st.pyplot(task3.visualize(task3.reflect(task3_image, _task3_reflection)))
-                case 'scale':
+                if 'scale':
                     st.write("Scale")
                     st.pyplot(task3.visualize(task3.scale(task3_image, _task3_scale)))
-                case 'shear':
+                if 'shear':
                     st.write("Shear")
                     st.pyplot(task3.visualize(task3.shear(task3_image, _task3_shearx, _task3_sheary)))
     
