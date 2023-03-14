@@ -8,7 +8,7 @@ two_d_arr = np.array([[1, 0, 1]
 def fill(x, y, color):
     
     fig = plt.figure()
-    for i in range(len(two_d_ar,r)):
+    for i in range(len(two_d_arr)):
         for j in range(len(two_d_arr)):
             two_d_arr[x][y] = color
 
