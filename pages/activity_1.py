@@ -1,6 +1,8 @@
 import matplotlib.pyplot as plt
 import streamlit as st
 
+st.title("Activity 2")
+
 def DDALine(x1, y1, x2, y2, color):
     fig = plt.figure()
 
@@ -98,7 +100,6 @@ def midpoint(x1, y1, x2, y2, color):
     return fig
 
 def main():
-    st.header("Activity 1")
     x = st.sidebar.slider("x1", 0, 100, 50)
     y = st.sidebar.slider("y1", 0, 100, 50)
     x_end = st.sidebar.slider("x2", 0, 100, 75)
