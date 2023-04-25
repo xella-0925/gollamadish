@@ -4,6 +4,8 @@ import cv2
 import matplotlib.pyplot as plt
 from PIL import Image
 
+st.set_option('deprecation.showPyplotGlobalUse', False)
+#st.set_option ('browser.gatherUsageStats' , False)
 st.header("Activity 3 - Image Processing")
 
 # Sidebar for uploading image and selecting transformations
