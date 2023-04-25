@@ -67,38 +67,43 @@ if img_file is not None:
     rows, cols, dims = uploaded_img.shape
 
     st.write('Original Image:')
-    st.pyplot(visualize(uploaded_img))
+    st.image(uploaded_img)
 
     if user_choice == 'Translation':
         st.write('Translated Image:')
-        st.pyplot(visualize(translate(uploaded_img, rows, cols)))
-        
+        st.image(translate(uploaded_img, rows, cols))
+
     elif user_choice == 'Rotation':
         st.write('Rotated Image:')
-        st.pyplot(visualize(rotate(uploaded_img, rows, cols)))
+        st.image(rotate(uploaded_img, rows, cols))
 
     elif user_choice == 'Scaling':
         st.write('Scaled Image:')
-        st.pyplot(visualize(scale(uploaded_img, rows, cols)))
+        st.image(scale(uploaded_img, rows, cols))
 
     elif user_choice == 'Reflection':
         st.write('Reflected Image:')
-        st.pyplot(visualize(reflect(uploaded_img, rows, cols)))
+        st.image(reflect(uploaded_img, rows, cols))
 
     elif user_choice == 'Shearing':
         st.write('Sheated Image:')
-        st.pyplot(visualize(shear(uploaded_img, rows, cols)))
+        st.image(shear(uploaded_img, rows, cols))
 
-    if user_choice == 'Translation':
-        img_processed = translate(uploaded_img, rows, cols)
-    elif user_choice == 'Rotation':
-        img_processed = rotate(uploaded_img, rows, cols)
-    elif user_choice == 'Scaling':
-        img_processed = scale(uploaded_img, rows, cols)
-    elif user_choice == 'Reflection':
-        img_processed = reflect(uploaded_img, rows, cols)
-    elif user_choice == 'Shearing':
-        img_processed = shear(uploaded_img, rows, cols)
+    if user_choice != 'Select a transformation to apply':
+        st.write('Processed Image:')
+        st.pyplot(visualize(img_processed))
 
-    st.write('Processed Image:')
-    st.pyplot(visualize(img_processed))
+
+    #if user_choice == 'Translation':
+     #   img_processed = translate(uploaded_img, rows, cols)
+    #elif user_choice == 'Rotation':
+       # img_processed = rotate(uploaded_img, rows, cols)
+    #elif user_choice == 'Scaling':
+      #  img_processed = scale(uploaded_img, rows, cols)
+   # elif user_choice == 'Reflection':
+  #      img_processed = reflect(uploaded_img, rows, cols)
+   # elif user_choice == 'Shearing':
+    #    img_processed = shear(uploaded_img, rows, cols)
+
+  #  st.write('Processed Image:')
+   # st.pyplot(visualize(img_processed))
