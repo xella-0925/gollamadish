@@ -31,7 +31,7 @@ if img_file is not None:
         m_rotated = np.float32([[np.cos(angle), -(np.sin(angle)), 0],
                                 [np.sin(angle), np.cos(angle), 0],
                                 [0, 0, 1]])
-        rotated_img = cv2.warpPerspective(img_, m_rotated, (int(cols), int(rows)))
+        rotated_img = cv2.warpPerspective(img_, m_rotated, (cols, rows))
         return rotated_img
     
     # function for scaling
@@ -47,7 +47,7 @@ if img_file is not None:
         m_reflection = np.float32([[1, 0, 0],
                                    [0, -1, rows],
                                    [0, 0, 1]])
-        reflected_img = cv2.warpPerspective(img_, m_reflection, (int(cols), int(rows)))
+        reflected_img = cv2.warpPerspective(img_, m_reflection, (cols, rows))
         return reflected_img
     
     # function for shearing
@@ -80,3 +80,4 @@ if img_file is not None:
 
     img_processed = user_choices(user_choice, uploaded_img)
     st.image(img_processed)
+
