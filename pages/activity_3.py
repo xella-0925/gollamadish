@@ -73,4 +73,6 @@ def main():
     for img in transformed_images:
         st.image(img)
 
-if __name__ == '__
+if __name__ == '__main__':
+    main()
+
