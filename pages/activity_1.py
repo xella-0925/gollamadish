@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+import pages.activity_1 as act1
 
 st.set_option('deprecation.showPyplotGlobalUse', False)
 #st.set_option ('browser.gatherUsageStats' , False)
