@@ -1,11 +1,6 @@
 import matplotlib.pyplot as plt
 import pages.activity_1 as act1
-
-st.set_option('deprecation.showPyplotGlobalUse', False)
-#st.set_option ('browser.gatherUsageStats' , False)
-
-
-
+import ipywidgets as widgets
 
 def DDALine(x1, y1, x2, y2, color):
     fig = plt.figure()
@@ -114,21 +109,6 @@ def main():
     bresenham(x, y, x_end, y_end, color)
     midpoint(x, y, x_end, y_end, color)
     
-        st.title("Midterm Exam in CCS221")
-
-    st.sidebar.header("Line Algorithm Parameters")
-    _act1_x0, _act1_y0, _act1_x1, _act1_y1 = st.sidebar.slider('Starting X', 1, 100), \
-                     st.sidebar.slider('Starting Y', 1, 100), \
-                     st.sidebar.slider('Ending X', 1, 100, 10), \
-                     st.sidebar.slider('Ending Y', 1, 100, 10)
-    
-    st.header("Activity 1")
-    st.subheader("DDA Line Algorithm")
-    st.pyplot(act1.DDALine(_act1_x0, _act1_y0, _act1_x1, _act1_y1, 'ro'))
-    st.subheader("Bresenham's Line Algorithm")
-    st.pyplot(act1.bresenham(_act1_x0, _act1_y0, _act1_x1, _act1_y1, 'ro'))
-    st.subheader("Midpoint Line Algorithm")
-    st.pyplot(act1.midpoint(_act1_x0, _act1_y0, _act1_x1, _act1_y1, 'ro'))
-
+        
 if __name__ == "__main__":
     main()
