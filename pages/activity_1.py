@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import streamlit as st
 
-st.title("Activity 2")
+st.title("Activity 1")
 
 def DDALine(x1, y1, x2, y2, color):
     fig = plt.figure()
