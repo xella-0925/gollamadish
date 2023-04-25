@@ -62,7 +62,7 @@ def images_transform(*images):
             st.image(shear(img, float(input('Enter x shear factor: ')), float(input('Enter y shear factor: '))))
         if 'reflect' in transformations.lower():
             st.write('Reflected Image')
-            st.image(reflect(img, input('Enter axis to reflect image along: '))))
+            st.image(reflect(img, input('Enter axis to reflect image along: ')))
             
 def main():
     imgs = multiple_image_load()
