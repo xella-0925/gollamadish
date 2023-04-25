@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 from PIL import Image
 
 st.set_option('deprecation.showPyplotGlobalUse', False)
-#st.set_option ('browser.gatherUsageStats' , False)
+
 st.header("Activity 3 - Image Processing")
 
 # Sidebar for uploading image and selecting transformations
@@ -21,6 +21,13 @@ def visualize(img):
     # return the plotted image as a numpy array
     return np.array(plt.gcf().canvas.buffer_rgba())
 
+# Function to check if file is a valid image
+def is_valid_image(file):
+    if file is not None:
+        file_type = file.type.split('/')[1]
+        if file_type in ['png', 'jpg', 'webp']:
+            return True
+    return False
 
 # Function for translation
 def translate(img_, rows, cols):
@@ -65,7 +72,9 @@ def shear(img_, rows, cols):
     return sheared_img
 
 # Main code for processing image and displaying transformed images
-if img_file is not None:
+
+
+if is_valid_image(img_file):
     uploaded_img = Image.open(img_file)
     uploaded_img = np.array(uploaded_img)
     rows, cols, dims = uploaded_img.shape
@@ -98,8 +107,8 @@ if img_file is not None:
         img_processed = shear(uploaded_img, rows, cols)
         st.image(img_processed)
 
-if user_choice != 'Select a transformation to apply':
-    st.write('Processed Image:')
-    st.image(img_processed)
-else:
-    st.write('No transformation selected')
+    if user_choice != 'Select a transformation to apply':
+        st.write('Processed Image:')
+        st.image(img_processed)
+    else:
+        st.write('No transformation selected')
