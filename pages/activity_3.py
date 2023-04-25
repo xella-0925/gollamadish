@@ -129,29 +129,6 @@ def images_transform(*images):
             visualize(reflect(img, input('Enter axis to reflect image along: ')))
             
 def main():
-    # img = cv2.imread('images/img1.webp')
-    # img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-    # visualize(img)
-    
-    # # Translate the image 100 pixels to the right and 50 pixels down
-    # translated = translate(img, 100, 50)
-    # visualize(translated)
-    
-    # # Rotate the image 45 degrees counter-clockwise
-    # rotated = rotate(img, 45)
-    # visualize(rotated)
-    
-    # # Scale the image by 50%
-    # scaled = scale(img, 0.5)
-    # visualize(scaled)
-    
-    # # Shear the image by 0.2 horizontally and 0.3 vertically
-    # sheared = shear(img, 0.2, 0)
-    # visualize(sheared)
-    
-    # # Reflect the image along the x-axis
-    # reflected = reflect(img, 'x y')
-    # visualize(reflected)
 
     imgs = multiple_image_load()
     images_transform(*imgs)
