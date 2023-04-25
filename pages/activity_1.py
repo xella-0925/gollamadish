@@ -100,12 +100,12 @@ def midpoint(x1, y1, x2, y2, color):
     return fig
 
 def main():
+    st.sidebar.header("Line Algorithm Parameters")
     x = st.sidebar.slider("x1", 0, 100, 50)
     y = st.sidebar.slider("y1", 0, 100, 50)
     x_end = st.sidebar.slider("x2", 0, 100, 75)
     y_end = st.sidebar.slider("y2", 0, 100, 75)
     color = "#aa2533"
-    
     
     fig_dda = DDALine(x, y, x_end, y_end, color)
     st.subheader("DDA Line Algorithm")
