@@ -23,15 +23,13 @@ def visualize(img):
 
 # Function to check if file is a valid image
 def is_valid_image(file):
-    if file is not None:
-        file_type = file.type.split('/')[1]
-        if file_type in ['png', 'jpg', 'webp']:
-            return True
+    if file is not None and hasattr(file, "type") and file.type.split('/')[1] in ['png', 'jpg', 'webp']:
+        return True
     return False
 
 # Function for translation
 def translate(img_, rows, cols):
-    img_translated = np.float32([[1, 0, cols//4], 
+    img_translated = np.float32([[1, 0, cols//4],
                                  [0, 1, rows//4],
                                  [0, 0, 1]])
     img_translated = cv2.warpPerspective(img_, img_translated, (cols, rows))
@@ -72,9 +70,7 @@ def shear(img_, rows, cols):
     return sheared_img
 
 # Main code for processing image and displaying transformed images
-
-
-if is_valid_image(img_file):
+if img_file is not None and is_valid_image(img_file):
     uploaded_img = Image.open(img_file)
     uploaded_img = np.array(uploaded_img)
     rows, cols, dims = uploaded_img.shape
@@ -112,3 +108,5 @@ if is_valid_image(img_file):
         st.image(img_processed)
     else:
         st.write('No transformation selected')
+else:
+    st.write('No image selected or invalid file format')
