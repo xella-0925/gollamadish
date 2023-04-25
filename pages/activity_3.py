@@ -81,53 +81,75 @@ def visualize(img):
     plt.imshow(img)
     plt.axis('off')
     return fig
+def upload_images():
+    '''
+    Uploads multiple images from the user and returns a list of images.
+    '''
 
-def multiple_image_load():
-    '''
-    Loads multiple images from a list of image paths (img_paths).
-    Returns a list of images.
-    
-    Parameters:
-    img_paths: list of image paths
-    '''
-    
-    images, img_paths = [], []
-    c = int(input('Enter number of files: '))
-    for i in range(c):
-        img_paths.append(input(f'Enter image path {i + 1}/{c} : '))
-    for path in img_paths:
-        images.append(cv2.cvtColor(cv2.imread(path), cv2.COLOR_BGR2RGB))
+    images = []
+    uploaded_files = st.file_uploader('Upload Image', type=['jpg', 'jpeg', 'png'], accept_multiple_files=True)
+
+    if uploaded_files is not None:
+        for uploaded_file in uploaded_files:
+            image = Image.open(uploaded_file)
+            image = np.array(image)
+            images.append(image)
     return images
 
-def images_transform(*images):
+def images_transform():
     '''
     Transforms multiple images (images) using the functions defined above.
     Prompts the user to enter the parameters for each transformation.
-    
-    Parameters:
-    images: list of images to be transformed
     '''
 
-    transformations = input('Enter transformations to apply to images: ')
-    
+    images = upload_images()
+
+    transformations = st.sidebar.multiselect('Select transformations to apply to images:', 
+                                             ['translate', 'rotate', 'scale', 'shear', 'reflect'],
+                                             format_func=str)
+
     for img in images:
-        print('Original Image')
-        visualize(img)
-        if 'translate' in transformations.lower():
-            print('Translated Image')
-            visualize(translate(img, int(input('Enter x translation: ')), int(input('Enter y translation: '))))
-        if 'rotate' in transformations.lower():
-            print('Rotated Image')
-            visualize(rotate(img, float(input('Enter rotation angle: '))))
-        if 'scale' in transformations.lower():
-            print('Scaled Image')
-            visualize(scale(img, float(input('Enter scale factor: '))))
-        if 'shear' in transformations.lower():
-            print('Sheared Image')
-            visualize(shear(img, float(input('Enter x shear factor: ')), float(input('Enter y shear factor: '))))
-        if 'reflect' in transformations.lower():
-            print('Reflected Image')
-            visualize(reflect(img, input('Enter axis to reflect image along: ')))
+        st.subheader('Original Image')
+        st.image(img, use_column_width=True)
+
+        if 'translate' in transformations:
+            x_translation = st.slider('X Translation', -img.shape[1], img.shape[1], 0)
+            y_translation = st.slider('Y Translation', -img.shape[0], img.shape[0], 0)
+            transformed_img = translate(img, x_translation, y_translation)
+            st.subheader('Translated Image')
+            st.image(transformed_img, use_column_width=True)
+            img = transformed_img
+
+        if 'rotate' in transformations:
+            rotation_angle = st.slider('Rotation Angle', -180.0, 180.0, 0.0)
+            transformed_img = rotate(img, rotation_angle)
+            st.subheader('Rotated Image')
+            st.image(transformed_img, use_column_width=True)
+            img = transformed_img
+
+        if 'scale' in transformations:
+            scale_factor = st.slider('Scale Factor', 0.1, 10.0, 1.0, 0.1)
+            transformed_img = scale(img, scale_factor)
+            st.subheader('Scaled Image')
+            st.image(transformed_img, use_column_width=True)
+            img = transformed_img
+
+        if 'shear' in transformations:
+            x_shear_factor = st.slider('X Shear Factor', -1.0, 1.0, 0.0, 0.1)
+            y_shear_factor = st.slider('Y Shear Factor', -1.0, 1.0, 0.0, 0.1)
+            transformed_img = shear(img, x_shear_factor, y_shear_factor)
+            st.subheader('Sheared Image')
+            st.image(transformed_img, use_column_width=True)
+            img = transformed_img
+
+        if 'reflect' in transformations:
+            reflection_axis = st.radio('Select axis to reflect the image along:', ['X axis', 'Y axis'])
+            transformed_img = reflect(img, reflection_axis)
+            st.subheader('Reflected Image')
+            st.image(transformed_img, use_column_width=True)
+            img = transformed_img
+
+
             
 def main():
 
@@ -144,8 +166,7 @@ def main():
         _act3_translationy = st.sidebar.slider('Y Translation', 0, 1000)
         
     if 'reflect' in _act3_transformations:
-        _act3_reflectionx = st.sidebar.checkbox('Reflect along x axis', True)
-        _act3_reflectiony = st.sidebar.checkbox('Reflect along y axis')
+        _act3_reflection_axis = st.sidebar.radio('Select axis to reflect image along:', ['x', 'y'])
         _act3_reflection = ''
         if _act3_reflectionx and _act3_reflectiony:
             _act3_reflection = 'x y'
