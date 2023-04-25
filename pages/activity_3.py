@@ -1,78 +1,88 @@
-import cv2
-import numpy as np
-import streamlit as st
+#activity 3 - Image Processing
 
+import streamlit as st
+import numpy as np
+import cv2
+import matplotlib.pyplot as plt
 from PIL import Image
 
-def translate(img, x, y):
-    M = np.float32([[1, 0, x],
-                    [0, 1, y]])
-    translated = cv2.warpAffine(img, M, (img.shape[1], img.shape[0]))
-    return translated
+st.header("Activity 3 - Image Processing")
+img_file = st.sidebar.file_uploader('Please input the image path here:', ['png', 'jpg', 'webp', 'jpeg'])
 
-def rotate(img, theta):
-    M = cv2.getRotationMatrix2D((img.shape[1] // 2, img.shape[0] // 2), theta, 1.0)
-    rotated = cv2.warpAffine(img, M, (img.shape[1], img.shape[0]))
-    return rotated
+uploaded_img = Image.open(img_file)
+uploaded_img = np.array(uploaded_img)
 
-def scale(img, scale):
-    M = np.float32([[scale, 0, 0],
-                    [0, scale, 0]])
-    scaled = cv2.warpAffine(img, M, (img.shape[1], img.shape[0]))
-    return scaled
+rows, cols, dims = uploaded_img.shape
+    
 
-def shear(img, x, y):
-    M = np.float32([[1, x, 0],
-                    [y, 1, 0]])
-    sheared = cv2.warpAffine(img, M, (img.shape[1], img.shape[0]))
-    return sheared
+st.sidebar.header('Process Your Image here!')
+user_choice = st.sidebar.number_input('1: Translation\n2: Rotation:\n3: Scaling\n4: Reflection\n5: Shearing', min_value=1, max_value=4, step=1)
 
-def reflect(img, axis):
-    if 'x' in axis.lower():
-        reflected = cv2.flip(img, 1)
-    if 'y' in axis.lower():
-        reflected = cv2.flip(img, 0)
-    return reflected
+#function for translation
+def translation(img_, rows, cols):
 
-def multiple_image_load():
-    images, img_paths = [], []
-    c = int(input('Enter number of files: '))
-    for i in range(c):
-        img_paths.append(input(f'Enter image path {i + 1}/{c} : '))
-    for path in img_paths:
-        images.append(cv2.cvtColor(cv2.imread(path), cv2.COLOR_BGR2RGB))
-    return images
+    img_translated = np.float32([[1, 0, 50], 
+                                [0, 1, 50],
+                                [0, 0, 1]])
+    img_translated =  cv2.warpPerspective(img_, img_translated, (cols, rows))
 
-def images_transform(*images):
-    transformations = input('Enter transformations to apply to images: ')
-    transformed_images = []
-    for img in images:
-        st.write('Original Image')
-        st.image(img)
-        if 'translate' in transformations.lower():
-            st.write('Translated Image')
-            st.image(translate(img, int(input('Enter x translation: ')), int(input('Enter y translation: '))))
-        if 'rotate' in transformations.lower():
-            st.write('Rotated Image')
-            st.image(rotate(img, float(input('Enter rotation angle: '))))
-        if 'scale' in transformations.lower():
-            st.write('Scaled Image')
-            st.image(scale(img, float(input('Enter scale factor: '))))
-        if 'shear' in transformations.lower():
-            st.write('Sheared Image')
-            st.image(shear(img, float(input('Enter x shear factor: ')), float(input('Enter y shear factor: '))))
-        if 'reflect' in transformations.lower():
-            st.write('Reflected Image')
-            st.image(reflect(img, input('Enter axis to reflect image along: ')))
-    return transformed_images
+    return img_translated
 
-def main():
-    images = multiple_image_load()
-    transformed_images = images_transform(*images)
-    st.write('Transformed Images')
-    for img in transformed_images:
-        st.image(img)
+#function for rotation
+def rotation(img_, rows, cols):
+    angle = np.radians(10)
+    m_rotated = np.float32([[np.cos(angle), -(np.sin(angle)), 0],
+                            [np.sin(angle), np.cos(angle), 0],
+                            [0, 0, 1]])
 
-if __name__ == '__main__':
-    main()
+    rotated_img = cv2.warpPerspective(img_, m_rotated, (int(cols), int(rows)))
+    return rotated_img
 
+#function for scaling
+def scaling(img_, rows, cols):
+    m_scaling = np.float32([[1.5, 0, 0],
+                            [0, 1.8, 0],
+                            [0, 0, 1]])
+    scaled_img = cv2.warpPerspective(img_, m_scaling, (cols*2, rows*2))
+    return scaled_img
+
+#function for reflection
+def reflection(img_, rows, cols):
+    m_reflection = np.float32([[1, 0, 0],
+                               [0, -1, rows],
+                               [0, 0, 1]])
+    reflected_img = cv2.warpPerspective(img_, m_reflection, (int(cols), int(rows)))
+    return reflected_img
+    
+#function dor shearing
+def shear(img_, rows, cols):
+    m_shearing = np.float32([[1, 0.5, 0],
+                            [0, 1, 0],
+                            [0, 0, 1]])
+    sheared_img = cv2.warpPerspective(img_, m_shearing, (int(cols*1.5),int(rows*1.5)))
+    return sheared_img
+
+figure = plt.figure()
+#function that allows the user to choose between the image processing options
+def user_choices(user_choice, img):
+    
+    if user_choice == 1:
+        manipulated_img = translation(img, rows, cols)
+
+    elif user_choice == 2:
+        manipulated_img  = rotation(img, rows, cols)
+
+    elif user_choice == 3:
+        manipulated_img  = scaling(img, rows, cols)
+
+    elif user_choice == 4:
+        manipulated_img  = reflection(img, rows, cols)
+
+    elif user_choice == 5:
+        manipulated_img  = shear(img, rows, cols)
+
+    plt.axis("off")
+    return manipulated_img 
+
+img_processed = user_choices(user_choice, uploaded_img)
+st.image(img_processed)
