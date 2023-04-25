@@ -87,16 +87,14 @@ if img_file is not None:
         st.image(img_processed)
 
     elif user_choice == 'Reflection':
-        st.write('Ref
-elif user_choice == 'Reflection':
-    st.write('Reflected Image:')
-    img_processed = reflect(uploaded_img, rows, cols)
-    st.image(img_processed)
+        st.write('Reflected Image:')
+        img_processed = reflect(uploaded_img, rows, cols)
+        st.image(img_processed)
 
-elif user_choice == 'Shearing':
-    st.write('Sheated Image:')
-    img_processed = shear(uploaded_img, rows, cols)
-    st.image(img_processed)
+    elif user_choice == 'Shearing':
+        st.write('Sheated Image:')
+        img_processed = shear(uploaded_img, rows, cols)
+        st.image(img_processed)
 
 if user_choice != 'Select a transformation to apply':
     st.write('Processed Image:')
