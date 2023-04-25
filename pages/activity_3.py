@@ -1,12 +1,12 @@
 import cv2
 import numpy as np
-import matplotlib.pyplot as plt
 import streamlit as st
+
 from PIL import Image
 
 def translate(img, x, y):
     M = np.float32([[1, 0, x],
-                     [0, 1, y]])
+                    [0, 1, y]])
     translated = cv2.warpAffine(img, M, (img.shape[1], img.shape[0]))
     return translated
 
@@ -45,6 +45,7 @@ def multiple_image_load():
 
 def images_transform(*images):
     transformations = input('Enter transformations to apply to images: ')
+    transformed_images = []
     for img in images:
         st.write('Original Image')
         st.image(img)
@@ -63,9 +64,13 @@ def images_transform(*images):
         if 'reflect' in transformations.lower():
             st.write('Reflected Image')
             st.image(reflect(img, input('Enter axis to reflect image along: ')))
-            
-def main():
-    imgs = multiple_image_load()
+    return transformed_images
 
-if __name__ == '__main__':
-    main()
+def main():
+    images = multiple_image_load()
+    transformed_images = images_transform(*images)
+    st.write('Transformed Images')
+    for img in transformed_images:
+        st.image(img)
+
+if __name__ == '__
