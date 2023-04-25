@@ -32,18 +32,14 @@ def fill(x, y, replace): # changes the color of one desired position (x,y) you w
     
     
 def main(): #displays & prompt user input, including the instructions or neccesarry informtaion the user has to know. 
-    
-    # fill(5, 4, 25) #call function fill to main to plot the matrix.
-    pass
-  
-     st.sidebar.header("Change Pixel Hue Parameters")
-     x = st.sidebar.slider('X coordinate', 0, 2, 0, 1), \
-     y = st.sidebar.slider('Y coordinate', 0, 2, 0, 1), \
-     replace = st.sidebar.slider('Hue', 0, 100, 50)
+    st.sidebar.header("Change Pixel Hue Parameters")
+    x = st.sidebar.slider('X coordinate', 0, 2, 0)
+    y = st.sidebar.slider('Y coordinate', 0, 2, 0)
+    replace = st.sidebar.slider('Hue', 0, 100, 50)
       
-     fig_fill = fill(x, y, replace)
-     st.subheader("Change pixel hue parameters.")
-     st.pyplot(fill)
+    fig_fill = fill(x, y, replace)
+    st.subheader("Change pixel hue parameters.")
+    st.pyplot(fig_fill)
 
 
 if __name__ == '__main__':
