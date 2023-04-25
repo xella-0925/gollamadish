@@ -1,6 +1,7 @@
 import cv2
 import numpy as np
 import matplotlib.pyplot as plt
+import streamlit as st
 
 def translate(img, x, y):
     '''
@@ -154,6 +155,62 @@ def main():
 
     imgs = multiple_image_load()
     images_transform(*imgs)
+    
+    st.sidebar.header("Image transformations")
+    _act3_images = st.sidebar.file_uploader('Upload your files here', ['png', 'jpg', 'webp'], True)
+    _act3_transformations = st.sidebar.multiselect('Select tranformations to apply: ', \
+                            ['translate', 'rotate', 'reflect', 'scale', 'shear'])
+
+    if 'translate' in _act3_transformations:
+        _act3_translationx = st.sidebar.slider('X Translation', 0, 1000)
+        _act3_translationy = st.sidebar.slider('Y Translation', 0, 1000)
+        
+    if 'reflect' in _act3_transformations:
+        _act3_reflectionx = st.sidebar.checkbox('Reflect along x axis', True)
+        _act3_reflectiony = st.sidebar.checkbox('Reflect along y axis')
+        _act3_reflection = ''
+        if _act3_reflectionx and _act3_reflectiony:
+            _act3_reflection = 'x y'
+        elif _act3_reflectionx:
+            _act3_reflection = 'x'
+        elif _act3_reflectiony:
+            _act3_reflection = 'y'
+        
+    if 'rotate' in _act3_transformations:
+        _act3_rotation = st.sidebar.slider('Rotation', -360, 360, 0)
+        
+    if 'scale' in _act3_transformations:
+        _act3_scale = st.sidebar.slider('Scale', 0.0, 5.0, 1.0, 0.000001)
+        
+    if 'shear' in _act3_transformations:
+        _act3_shearx = st.sidebar.slider('X Shear', 0.0, 5.0, 0.0, 0.000001)
+        _act3_sheary = st.sidebar.slider('Y Shear', 0.0, 5.0, 0.0, 0.000001)
+        
+    st.header("Activity 3")
+    st.subheader("Image Transformations")
+    for act3_image in _act3_images:
+        act3_image = Image.open(act3_image)
+        # task3_image = cv2.cvtColor(np.asarray(act3_image), cv2.COLOR_BGR2RGB)
+        act3_image = np.asarray(act3_image)
+        st.write('Original Image:')
+        st.pyplot(act3.visualize(act3_image))
+        st.write('Image Transformations: ', *_act3_transformations)
+        for transformation in _act3_transformations:
+            if transformation == 'translate':
+                st.write("Translation")
+                st.pyplot(act3.visualize(task3.translate(act3_image, _act3_translationx, _act3_translationy)))
+            elif transformation == 'rotate':
+                st.write("Rotation")
+                st.pyplot(act3.visualize(act3.rotate(act3_image, _act3_rotation)))
+            elif transformation == 'reflect':
+                st.write("Reflect")
+                st.pyplot(act3.visualize(act3.reflect(act3_image, _act3_reflection)))
+            elif transformation == 'scale':
+                st.write("Scale")
+                st.pyplot(act3.visualize(act3.scale(act3_image, _act3_scale)))
+            elif transformation == 'shear':
+                st.write("Shear")
+                st.pyplot(act3.visualize(act3.shear(act3_image, _act3_shearx, _act3_sheary)))
 
 if __name__ == '__main__':
     main()
