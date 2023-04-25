@@ -63,6 +63,7 @@ def shear(img_, rows, cols):
     return sheared_img
 
 # Main code for processing image and displaying transformed images
+# Main code for processing image and displaying transformed images
 if img_file is not None:
     uploaded_img = Image.open(img_file)
     uploaded_img = np.array(uploaded_img)
@@ -91,16 +92,14 @@ if img_file is not None:
         st.write('Sheated Image:')
         st.image(shear(uploaded_img, rows, cols))
 
-    if user_choice == 'Translation':
-        img_processed = translate(uploaded_img, rows, cols)
-    elif user_choice == 'Rotation':
-        img_processed = rotate(uploaded_img, rows, cols)
-    elif user_choice == 'Scaling':
-        img_processed = scale(uploaded_img, rows, cols)
-    elif user_choice == 'Reflection':
-        img_processed = reflect(uploaded_img, rows, cols)
-    elif user_choice == 'Shearing':
-        img_processed = shear(uploaded_img, rows, cols)
+    if user_choice != 'Select a transformation to apply':
+        st.write('Processed Image:')
+        st.image(visualize(img_processed))
+
+else:
+    default_img = np.zeros((256, 256, 3), dtype=np.uint8)
+    st.image(default_img, caption='Upload an image to apply transformations')
+
 
     st.write('Processed Image:')
     st.image(img_processed)
