@@ -1,6 +1,5 @@
 import matplotlib.pyplot as plt
-import pages.activity_1 as act1
-import ipywidgets as widgets
+
 
 def DDALine(x1, y1, x2, y2, color):
     fig = plt.figure()
@@ -99,10 +98,10 @@ def midpoint(x1, y1, x2, y2, color):
     return fig
 
 def main():
-    x = int(input("Enter x1: "))
-    y = int(input("Enter y1: "))
-    x_end = int(input("Enter x2: "))
-    y_end = int(input("Enter y2: "))
+    x = st.slider("Enter x1", min_value=0, max_value=100, value=0)
+    y = st.slider("Enter y1", min_value=0, max_value=100, value=0)
+    x_end = st.slider("Enter x2", min_value=0, max_value=100, value=0)
+    y_end = st.slider("Enter y2", min_value=0, max_value=100, value=0)
     color = "#aa2533"
     fig = DDALine(x, y, x_end, y_end, color)
     plt.show()
