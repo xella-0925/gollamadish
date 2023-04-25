@@ -63,7 +63,6 @@ def shear(img_, rows, cols):
     return sheared_img
 
 # Main code for processing image and displaying transformed images
-# Main code for processing image and displaying transformed images
 if img_file is not None:
     uploaded_img = Image.open(img_file)
     uploaded_img = np.array(uploaded_img)
@@ -74,32 +73,33 @@ if img_file is not None:
 
     if user_choice == 'Translation':
         st.write('Translated Image:')
-        st.image(translate(uploaded_img, rows, cols))
+        img_processed = translate(uploaded_img, rows, cols)
+        st.image(img_processed)
 
     elif user_choice == 'Rotation':
         st.write('Rotated Image:')
-        st.image(rotate(uploaded_img, rows, cols))
+        img_processed = rotate(uploaded_img, rows, cols)
+        st.image(img_processed)
 
     elif user_choice == 'Scaling':
         st.write('Scaled Image:')
-        st.image(scale(uploaded_img, rows, cols))
+        img_processed = scale(uploaded_img, rows, cols)
+        st.image(img_processed)
 
     elif user_choice == 'Reflection':
-        st.write('Reflected Image:')
-        st.image(reflect(uploaded_img, rows, cols))
+        st.write('Ref
+elif user_choice == 'Reflection':
+    st.write('Reflected Image:')
+    img_processed = reflect(uploaded_img, rows, cols)
+    st.image(img_processed)
 
-    elif user_choice == 'Shearing':
-        st.write('Sheated Image:')
-        st.image(shear(uploaded_img, rows, cols))
+elif user_choice == 'Shearing':
+    st.write('Sheated Image:')
+    img_processed = shear(uploaded_img, rows, cols)
+    st.image(img_processed)
 
-    if user_choice != 'Select a transformation to apply':
-        st.write('Processed Image:')
-        st.image(visualize(img_processed))
-
-else:
-    default_img = np.zeros((256, 256, 3), dtype=np.uint8)
-    st.image(default_img, caption='Upload an image to apply transformations')
-
-
+if user_choice != 'Select a transformation to apply':
     st.write('Processed Image:')
     st.image(img_processed)
+else:
+    st.write('No transformation selected')
