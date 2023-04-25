@@ -97,18 +97,22 @@ def midpoint(x1, y1, x2, y2, color):
 
     return fig
 
-
 def main():
     x = st.sidebar.slider("x1", 0, 100, 50)
     y = st.sidebar.slider("y1", 0, 100, 50)
     x_end = st.sidebar.slider("x2", 0, 100, 75)
     y_end = st.sidebar.slider("y2", 0, 100, 75)
     color = "#aa2533"
-    fig = DDALine(x, y, x_end, y_end, color)
-    st.pyplot(fig)
-    bresenham(x, y, x_end, y_end, color)
-    midpoint(x, y, x_end, y_end, color)
     
+    fig_dda = DDALine(x, y, x_end, y_end, color)
+    st.pyplot(fig_dda)
+    
+    fig_bresenham = bresenham(x, y, x_end, y_end, color)
+    st.pyplot(fig_bresenham)
+    
+    fig_midpoint = midpoint(x, y, x_end, y_end, color)
+    st.pyplot(fig_midpoint)
+
         
 if __name__ == "__main__":
     main()
