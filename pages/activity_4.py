@@ -4,7 +4,9 @@ import matplotlib.pyplot as plt
 
 # Load image
 img_ = cv2.imread("jeno-lee.jpg")
-img_ = cv2.cvtColor(img_, cv2.COLOR_BGR2RGB)
+img_ = cv2.cvtColor(img_, cv2.COLOR_RGB2BGR)
+
+#img_ = cv2.cvtColor(img_, cv2.COLOR_BGR2RGB)
 
 # Define image shape
 rows, cols, dims = img_.shape
