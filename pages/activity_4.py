@@ -3,10 +3,41 @@ import cv2
 import matplotlib.pyplot as plt
 
 # Load image
-img_ = cv2.imread("jeno-lee.jpg")
-img_ = cv2.cvtColor(img_, cv2.COLOR_RGB2BGR)
+# Streamlit app
+import streamlit as st
 
-#img_ = cv2.cvtColor(img_, cv2.COLOR_BGR2RGB)
+# Sidebar file uploader widget
+uploaded_file = st.sidebar.file_uploader("Choose an image", type=['jpg', 'jpeg', 'png'])
+
+if uploaded_file is not None:
+    # Read image
+    img_ = cv2.imdecode(np.fromstring(uploaded_file.read(), np.uint8), 1)
+    img_ = cv2.cvtColor(img_, cv2.COLOR_BGR2RGB)
+    rows, cols, dims = img_.shape
+    
+    # Sidebar slider widget
+    option = st.sidebar.selectbox("Select Transformation", ["Original Image",
+                                                            "Translation",
+                                                            "Scaling",
+                                                            "Rotation",
+                                                            "Flip",
+                                                            "Shear (X)",
+                                                            "Shear (Y)"])
+
+    if option == "Original Image":
+        st.image(img_, use_column_width=True)
+
+    elif option == "Translation":
+        x = st.sidebar.slider("Horizontal Shift", -200, 200, 100)
+        y = st.sidebar.slider("Vertical Shift", -200, 200, 50)
+        result = translate(img_, rows, cols, x, y)
+        plt_grph(result)
+        st.pyplot()
+
+
+img_ = cv2.imread('path/to/image.jpg')
+#img_ = cv2.cvtColor(img_, cv2.COLOR_RGB2BGR)
+img_ = cv2.cvtColor(img_, cv2.COLOR_BGR2RGB)
 
 # Define image shape
 rows, cols, dims = img_.shape
