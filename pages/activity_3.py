@@ -1,3 +1,4 @@
+```
 The given code is not showing the image in Streamlit. Here is a fixed version of the code that should display the image properly.
 
 ```
