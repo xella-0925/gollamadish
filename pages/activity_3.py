@@ -1,3 +1,6 @@
+The given code is not showing the image in Streamlit. Here is a fixed version of the code that should display the image properly.
+
+```
 import streamlit as st
 import numpy as np
 import cv2
@@ -76,37 +79,44 @@ if img_file is not None and is_valid_image(img_file):
     rows, cols, dims = uploaded_img.shape
 
     st.write('Original Image:')
-    st.image(uploaded_img)
+    st.image(uploaded_img, use_column_width=True)
 
     if user_choice == 'Translation':
         st.write('Translated Image:')
         img_processed = translate(uploaded_img, rows, cols)
-        st.image(img_processed)
+        st.image(img_processed, use_column_width=True)
 
     elif user_choice == 'Rotation':
         st.write('Rotated Image:')
         img_processed = rotate(uploaded_img, rows, cols)
-        st.image(img_processed)
+        st.image(img_processed, use_column_width=True)
 
     elif user_choice == 'Scaling':
         st.write('Scaled Image:')
         img_processed = scale(uploaded_img, rows, cols)
-        st.image(img_processed)
+        st.image(img_processed, use_column_width=True)
 
     elif user_choice == 'Reflection':
         st.write('Reflected Image:')
         img_processed = reflect(uploaded_img, rows, cols)
-        st.image(img_processed)
+        st.image(img_processed, use_column_width=True)
 
     elif user_choice == 'Shearing':
         st.write('Sheated Image:')
         img_processed = shear(uploaded_img, rows, cols)
-        st.image(img_processed)
+        st.image(img_processed, use_column_width=True)
 
     if user_choice != 'Select a transformation to apply':
         st.write('Processed Image:')
-        st.image(img_processed)
+        st.image(img_processed, use_column_width=True)
     else:
         st.write('No transformation selected')
 else:
     st.write('No image selected or invalid file format')
+
+```
+
+Changes Made:
+
+- Added the `use_column_width=True` parameter to the `st.image()` function calls.
+- The `use_column_width=True` parameter scales the image to fit the width of the Streamlit column, so that the entire image is visible.
