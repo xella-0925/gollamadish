@@ -1,5 +1,4 @@
-# submitted by: REYCEL B. SARMIENTO, ANGELIKA MARIE NAVA & MARIANE FAITH TORREVERDE
-
+import streamlit as st
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -10,9 +9,7 @@ from scipy.spatial import Delaunay
 import tensorflow as tf
 tf.compat.v1.disable_eager_execution()
 
-
 def rotate_obj(points, angle):
-    angle = float(input("Angle: "))
     rotation_matrix = tf.stack([
                                 [tf.cos(angle), tf.sin(angle), 0],
                                 [-tf.sin(angle), tf.cos(angle), 0],
@@ -24,7 +21,7 @@ def rotate_obj(points, angle):
 
 def _plt_basic_object_(points):
     tri = Delaunay(points).convex_hull
-    
+
     fig = plt.figure(figsize = (8, 8))
     ax = fig.add_subplot(111, projection = '3d')
     S = ax.plot_trisurf(points[:,0], points[:,1], points[:,2],
@@ -62,7 +59,7 @@ plt.show()
 def translate_obj(points, amount):
     return tf.add (points, amount)
 
-translation_amount =tf.constant([1, 2, 2], dtype=tf.float32) 
+translation_amount =tf.constant([1, 2, 2], dtype=tf.float32)
 translated_object = translate_obj(points, translation_amount)
 
 with tf.compat.v1.Session() as session:
@@ -71,9 +68,12 @@ with tf.compat.v1.Session() as session:
 _plt_basic_object_(translated_rectangle)
 plt.show()
 
+with st.sidebar:
+    angle = st.slider('Angle', 0, 360, 0, 1)
+
 with tf.compat.v1.Session() as session:
-    rotated_object = session.run(rotate_obj(init_rectangle_, 75))   
-    
+    rotated_object = session.run(rotate_obj(init_rectangle_, angle))
+
 _plt_basic_object_(rotated_object)
 plt.show()
 
@@ -105,7 +105,7 @@ plt.show()
 def translate_obj(points, amount):
     return tf.add (points, amount)
 
-translation_amount =tf.constant([1, 2, 2], dtype=tf.float32) 
+translation_amount =tf.constant([1, 2, 2], dtype=tf.float32)
 translated_object = translate_obj(points, translation_amount)
 
 with tf.compat.v1.Session() as session:
@@ -114,15 +114,18 @@ with tf.compat.v1.Session() as session:
 _plt_basic_object_(translated_tri_prism_)
 plt.show()
 
+with st.sidebar:
+    angle = st.slider('Angle', 0, 360, 0, 1)
+
 with tf.compat.v1.Session() as session:
-    rotated_object = session.run(rotate_obj(init_tri_prism_, 75))   
-    
+    rotated_object = session.run(rotate_obj(init_tri_prism_, angle))
+
 _plt_basic_object_(rotated_object)
 plt.show()
 
 # RIGHT TRIANGLE
 def _right_tri_(bottom_lower=(0, 0, 0), side_length=3):
-    
+
     bottom_lower = np.array(bottom_lower)
 
     points= np.vstack([
@@ -150,7 +153,7 @@ plt.show()
 def translate_obj(points, amount):
     return tf.add (points, amount)
 
-translation_amount =tf.constant([1, 2, 2], dtype=tf.float32) 
+translation_amount =tf.constant([1, 2, 2], dtype=tf.float32)
 translated_object = translate_obj(points, translation_amount)
 
 with tf.compat.v1.Session() as session:
@@ -159,9 +162,12 @@ with tf.compat.v1.Session() as session:
 _plt_basic_object_(translated_right_tri)
 plt.show()
 
+with st.sidebar:
+    angle = st.slider('Angle', 0, 360, 0, 1)
+
 with tf.compat.v1.Session() as session:
-    rotated_object = session.run(rotate_obj(init_right_tri_, 75))   
-    
+    rotated_object = session.run(rotate_obj(init_right_tri_, angle))
+
 _plt_basic_object_(rotated_object)
 plt.show()
 
@@ -193,7 +199,7 @@ plt.show()
 def translate_obj(points, amount):
     return tf.add (points, amount)
 
-translation_amount =tf.constant([1, 2, 2], dtype=tf.float32) 
+translation_amount =tf.constant([1, 2, 2], dtype=tf.float32)
 translated_object = translate_obj(points, translation_amount)
 
 with tf.compat.v1.Session() as session:
@@ -202,35 +208,11 @@ with tf.compat.v1.Session() as session:
 _plt_basic_object_(translated_isosceles_tri_)
 plt.show()
 
+with st.sidebar:
+    angle = st.slider('Angle', 0, 360, 0, 1)
+
 with tf.compat.v1.Session() as session:
-    rotated_object = session.run(rotate_obj(init_isosceles_tri_, 75))   
-    
+    rotated_object = session.run(rotate_obj(init_isosceles_tri_, angle))
+
 _plt_basic_object_(rotated_object)
 plt.show()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-   
