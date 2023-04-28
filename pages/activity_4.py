@@ -169,16 +169,16 @@ elif option == "Flip":
     st.pyplot()
 
 elif option == "Shear (X)":
-factor = st.sidebar.slider("Shear Factor", -1.0, 1.0, 0.2, 0.01)
-result = shear_x(img_, rows, cols, factor)
-plt_grph(result)
-st.pyplot()
+    factor = st.sidebar.slider("Shear Factor", -1.0, 1.0, 0.2, 0.01)
+    result = shear_x(img_, rows, cols, factor)
+    plt_grph(result)
+    st.pyplot()
 
 elif option == "Shear (Y)":
-factor = st.sidebar.slider("Shear Factor", -1.0, 1.0, 0.2, 0.01)
-result = shear_y(img_, rows, cols, factor)
-plt_grph(result)
-st.pyplot()
+    factor = st.sidebar.slider("Shear Factor", -1.0, 1.0, 0.2, 0.01)
+    result = shear_y(img_, rows, cols, factor)
+    plt_grph(result)
+    st.pyplot()
 
 
 
