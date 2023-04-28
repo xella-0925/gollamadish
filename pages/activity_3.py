@@ -112,9 +112,3 @@ if img_file is not None and is_valid_image(img_file):
 else:
     st.write('No image selected or invalid file format')
 
-```
-
-Changes Made:
-
-- Added the `use_column_width=True` parameter to the `st.image()` function calls.
-- The `use_column_width=True` parameter scales the image to fit the width of the Streamlit column, so that the entire image is visible.
