@@ -9,24 +9,20 @@ import tensorflow as tf
 tf.compat.v1.disable_eager_execution()
 
 def rotate_obj(points, angle):
-rotation_matrix = tf.stack([
-[tf.cos(angle), tf.sin(angle), 0],
-[-tf.sin(angle), tf.cos(angle), 0],
-[0, 0, 1]
-])
-rotate_object = tf.matmul(tf.cast(points, tf.float32), tf.cast(rotation_matrix, tf.float32))
+    rotation_matrix = tf.stack([[tf.cos(angle), tf.sin(angle), 0],[-tf.sin(angle), tf.cos(angle), 0],[0, 0, 1]])
+    rotate_object = tf.matmul(tf.cast(points, tf.float32), tf.cast(rotation_matrix, tf.float32))
 return rotate_object
 
 def plt_basic_object(points):
-tri = Delaunay(points).convex_hull
+    tri = Delaunay(points).convex_hull
 
-fig = plt.figure(figsize=(8, 8))
-ax = fig.add_subplot(111, projection='3d')
-S = ax.plot_trisurf(points[:, 0], points[:, 1], points[:, 2], triangles=tri, shade=True, cmap=cm.rainbow, lw=0.5)
+    fig = plt.figure(figsize=(8, 8))
+    ax = fig.add_subplot(111, projection='3d')
+    S = ax.plot_trisurf(points[:, 0], points[:, 1], points[:, 2], triangles=tri, shade=True, cmap=cm.rainbow, lw=0.5)
 
-ax.set_xlim3d(-5, 5) # manages the width of the shape
-ax.set_ylim3d(-5, 5)
-ax.set_zlim3d(-5, 5) # height
+    ax.set_xlim3d(-5, 5) # manages the width of the shape
+    ax.set_ylim3d(-5, 5)
+    ax.set_zlim3d(-5, 5) # height
 
 #RECTANGLE
 def rectangle(bottom_lower=(0, 0, 0), side_length=5, length=-4):
