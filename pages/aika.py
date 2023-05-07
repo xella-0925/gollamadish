@@ -1,132 +1,143 @@
 import numpy as np
-import cv2
 import matplotlib.pyplot as plt
 
-# Streamlit app
-
+from mpl_toolkits.mplot3d import Axes3D
+from matplotlib import cm
+from scipy.spatial import Delaunay
 import streamlit as st
-st.title("Activity 3")
-st.set_option('deprecation.showPyplotGlobalUse', False)
 
-# Sidebar file uploader widget
-st.sidebar.header(" Image Transformations")
-uploaded_file = st.sidebar.file_uploader("Choose an image", type=['jpg', 'jpeg', 'png'])
-
-if uploaded_file is not None:
-    # Read image
-    img_ = cv2.imdecode(np.frombuffer(uploaded_file.read(), np.uint8), 1)
-    img_ = cv2.cvtColor(img_, cv2.COLOR_BGR2RGB)
-    rows, cols, dims = img_.shape
+import tensorflow as tf
+tf.compat.v1.disable_eager_execution()
 
 
-    # Function to plot transformed image
+def transform_obj(points, transform_type, angle, translation):
+    if transform_type == "Rotation":
+        rotation_matrix = tf.stack([
+            [tf.cos(angle), tf.sin(angle), 0],
+            [-tf.sin(angle), tf.cos(angle), 0],
+            [0, 0, 1]
+        ])
+        transformed_object = tf.matmul(tf.cast(points, tf.float32), tf.cast(rotation_matrix, tf.float32))
+    elif transform_type == "Translation":
+        translation_matrix = tf.stack([
+            [1, 0, translation[0]],
+            [0, 1, translation[1]],
+            [0, 0, 1]
+        ])
+        transformed_object = tf.matmul(tf.cast(points, tf.float32), tf.cast(translation_matrix, tf.float32))
+    else:
+        transformed_object = points
 
-    def plt_grph(transformed_img_):
-        plt.axis('off')
-        plt.imshow(transformed_img_)
-
-
-    # Function to translate image and define its parameters
-
-    def translate(img_, rows, cols, x, y):
-        m_translation_ = np.float32([[1, 0, x],
-                                    [0, 1, y],
-                                    [0, 0, 1]])
-        translated_img_ = cv2.warpPerspective(img_, m_translation_, (cols, rows))
-        return translated_img_
-
-
-    # Function to scale image and define its parameters
-
-    def scaling(img_, rows, cols, x, y):
-        m_scaling_ = np.float32([[x, 0, 0],
-                                 [0, y, 0],
-                                 [0, 0, 1]])
-        scaled_img_ = cv2.warpPerspective(img_, m_scaling_, (int(cols*x), int(rows*y)))
-        return scaled_img_
+    return transformed_object
 
 
-    # Function to rotate image and define its parameters
+def _plt_basic_object_(points):
+    tri = Delaunay(points).convex_hull
 
-    def rotate(img_, rows, cols, angle):
-        m_rotation_ = cv2.getRotationMatrix2D((cols/2, rows/2), angle, 1)
-        rotated_img_ = cv2.warpAffine(img_, m_rotation_, (cols, rows))
-        return rotated_img_
+    fig = plt.figure(figsize=(8, 8))
+    ax = fig.add_subplot(111, projection='3d')
+    S = ax.plot_trisurf(points[:, 0], points[:, 1], points[:, 2],
+                        triangles=tri,
+                        shade=True, cmap=cm.rainbow, lw=0.5)
 
-
-    # Function to flip image and define its parameters
-
-    def flip(img_, axis):
-        img_flipped_ = cv2.flip(img_, axis)
-        return img_flipped_
-
-
-    # Function to shear image (x) and define its parameters
-
-    def shear_x(img_, rows, cols, factor):
-        m_shearing_x = np.float32([[1, factor, 0],
-                                   [0, 1, 0],
-                                   [0, 0, 1]])
-        sheared_img_x = cv2.warpPerspective(img_, m_shearing_x, (int(cols*1.5), int(rows*1.5)))
-        return sheared_img_x
+    ax.set_xlim3d(-5, 5)  # manages the width of the shape
+    ax.set_ylim3d(-5, 5)
+    ax.set_zlim3d(-5, 5)  # height
 
 
-    # Function to shear image (y) and define its parameters
+# RECTANGLE
+def _rectangle_(bottom_lower=(0, 0, 0), side_length=5, length=-4):
+    bottom_lower = np.array(bottom_lower)
 
-    def shear_y(img_, rows, cols, factor):
-        m_shearing_y = np.float32([[1, 0, 0],
-                                   [factor, 1, 0],
-                                   [0, 0, 1]])
-        sheared_img_y = cv2.warpPerspective(img_, m_shearing_y, (int(cols*1.5), int(rows*1.5)))
-        return sheared_img_y
+    points = np.vstack([
+        bottom_lower,
+        bottom_lower + [0, side_length, 0],
+        bottom_lower + [length, side_length, 0],
+        bottom_lower + [length, 0, 0],
+        bottom_lower + [0, 0, side_length],
+        bottom_lower + [0, side_length, side_length],
+        bottom_lower + [length, side_length, side_length],
+        bottom_lower + [length, 0, side_length],
+        bottom_lower,
+    ])
+
+    return points
 
 
-    # Sidebar slider widget
-    option = st.sidebar.selectbox("Select Transformation", ["Original Image",
-                                                            "Translation",
-                                                            "Scaling",
-                                                            "Rotation",
-                                                            "Flip",
-                                                            "Shear (X)",
-                                                            "Shear (Y)"])
+# RIGHT TRIANGLE
+def _right_tri_(bottom_lower=(0, 0, 0), side_length=3):
+    bottom_lower = np.array(bottom_lower)
 
-    if option == "Original Image":
-        st.image(img_, use_column_width=True)
+    points = np.vstack([
+        bottom_lower,
+        bottom_lower + [0, side_length, 0],
+        bottom_lower + [side_length, side_length, 0],
+        bottom_lower + [0, 0, side_length],
+        bottom_lower + [0, side_length, side_length],
+        bottom_lower + [side_length, 0, 0],
+        bottom_lower + [side_length, 0, 0],
+        bottom_lower + [side_length, 0, 0],
+        bottom_lower + [0, 0, side_length],
 
-    elif option == "Translation":
-        x = st.sidebar.slider("Horizontal Shift", -200, 200, 100)
-        y = st.sidebar.slider("Vertical Shift", -200, 200, 50)
-        result = translate(img_, rows, cols, x, y)
-        plt_grph(result)
-        st.pyplot()
+        bottom_lower,
+    ])
 
-    elif option == "Scaling":
-        x = st.sidebar.slider("Horizontal Scaling Factor", 0.1, 5.0, 1.5, 0.1)
-        y = st.sidebar.slider("Vertical Scaling Factor", 0.1, 5.0, 1.8, 0.1)
-        result = scaling(img_, rows, cols, x, y)
-        plt_grph(result)
-        st.pyplot()
+    return points
 
-    elif option == "Rotation":
-        angle = st.sidebar.slider("Angle of Rotation", -180, 180, 10)
-        result = rotate(img_, rows, cols, angle)
-        plt_grph(result)
-        st.pyplot()
 
-    elif option == "Flip":
-        axis = st.sidebar.slider("Flip Axis", 0, 1, 1)
-        result = flip(img_, axis)
-        plt_grph(result)
-        st.pyplot()
+# PYRAMID
+def _tri_prism_(bottom_lower=(0, 0, 0), side_length=5, side=4, two=2):
+    bottom_lower = np.array(bottom_lower)
 
-    elif option == "Shear (X)":
-        factor = st.sidebar.slider("Shear Factor", -1.0, 1.0, 0.2, 0.01)
-        result = shear_x(img_, rows, cols, factor)
-        plt_grph(result)
-        st.pyplot()
+    points = np.vstack([
+        bottom_lower,
+        bottom_lower + [0, side, 0],
+        bottom_lower + [side, side, 0],  # bottom left back
+        bottom_lower + [side, 0, 0],  # bottom right back
+        bottom_lower + [two, side, side_length],
+        bottom_lower + [two, side, side_length],
+        bottom_lower + [two, 0, side_length],
+        bottom_lower + [two, 0, side_length],
+        bottom_lower,
+    ])
 
-    elif option == "Shear (Y)":
-        factor = st.sidebar.slider("Shear Factor", -1.0, 1.0, 0.2, 0.01)
-        result = shear_y(img_, rows, cols, factor)
-        plt_grph(result)
-        st.pyplot()
+    return points
+
+
+def main():
+    st.title("3D Object Transformation")
+    st.sidebar.header("Image Transformations")
+    object_types = ["Rectangle", "Right Triangle", "Triangular Prism"]
+    object_type = st.sidebar.selectbox("Select Object Type", object_types)
+    transform_types = ["Rotation", "Translation"]
+    transform_type = st.sidebar.selectbox("Select Transform Type", transform_types)
+
+    if transform_type == "Rotation":
+        angle = st.sidebar.slider("Rotation Angle", -180.0, 180.0, step=1.0)
+        translation = None
+    elif transform_type == "Translation":
+        angle = None
+        translation_x = st.sidebar.slider("Translation X", -5.0, 5.0, step=0.1)
+        translation_y = st.sidebar.slider("Translation Y", -5.0, 5.0, step=0.1)
+        translation_z = st.sidebar.slider("Translation Z", -5.0, 5.0, step=0.1)
+        translation = [translation_x, translation_y, translation_z]
+
+    if object_type == "Rectangle":
+        init_object = _rectangle_(side_length=5, length=-4)
+    elif object_type == "Right Triangle":
+        init_object = _right_tri_(side_length=3)
+    elif object_type == "Triangular Prism":
+        init_object = _tri_prism_(side_length=5, side=4, two=2)
+
+    points = tf.constant(init_object, dtype=tf.float32)
+
+    with tf.compat.v1.Session() as session:
+        transformed_object = session.run(transform_obj(points, transform_type, np.radians(angle), translation))
+
+    _plt_basic_object_(transformed_object)
+    st.pyplot(plt)
+
+
+if __name__ == "__main__":
+    main()
+
