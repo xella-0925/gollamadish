@@ -5,9 +5,10 @@ import matplotlib.pyplot as plt
 # Streamlit app
 
 import streamlit as st
+st.title("Activity 3")
 
 # Sidebar file uploader widget
-
+st.sidebar.header(" Image Transformations")
 uploaded_file = st.sidebar.file_uploader("Choose an image", type=['jpg', 'jpeg', 'png'])
 
 if uploaded_file is not None:
