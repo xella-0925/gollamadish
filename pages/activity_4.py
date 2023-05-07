@@ -24,10 +24,11 @@ def plt_basic_object(points):
     ax = fig.add_subplot(111, projection='3d')
     S = ax.plot_trisurf(points[:, 0], points[:, 1], points[:, 2], triangles=tri, shade=True, cmap=cm.rainbow, lw=0.5)
 
-    ax.set_xlim3d(-5, 5)  # manages the width of the shape
+    ax.set_xlim3d(-5, 5) # manages the width of the shape
     ax.set_ylim3d(-5, 5)
-    ax.set_zlim3d(-5, 5)  # height
+    ax.set_zlim3d(-5, 5) # height
 
+# RECTANGLE
 def rectangle(bottom_lower=(0, 0, 0), side_length=5, length=-4):
     bottom_lower = np.array(bottom_lower)
 
