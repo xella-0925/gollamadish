@@ -1,6 +1,5 @@
 import numpy as np
 import cv2
-import matplotlib.pyplot as plt
 import streamlit as st
 
 def translate(img_, rows, cols, Bx, By):
@@ -32,18 +31,16 @@ if uploaded_file is not None:
     Tx = st.sidebar.number_input("Tx:", min_value=-cols, max_value=cols, step=1, value=0)
     Ty = st.sidebar.number_input("Ty:", min_value=-rows, max_value=rows, step=1, value=0)
 
-    Bx_new = Bx_old + Tx
-    By_new = By_old + Ty
+    no_of_imgs = st.sidebar.slider("Number of Images:", min_value=1, max_value=10, value=1, step=1)
 
-    old_img = translate(img_, rows, cols, Bx_old, By_old)
-    plt.figure()
-    plt.axis("off")
-    plt.imshow(old_img)
+    Bx_new = Bx_old
+    By_new = By_old
 
-    new_img = translate(img_, rows, cols, Bx_new, By_new)
-    plt.figure()
-    plt.axis("off")
-    plt.imshow(new_img)
+    st.image(img_, caption="Original Image", use_column_width=True)
 
-# Show the plots
-st.pyplot()
+    for no_of_tests in range(no_of_imgs):
+        new_img = translate(img_, rows, cols, Bx_new, By_new)
+        st.image(new_img, caption=f"New Image - Tx: {Tx}, Ty: {Ty}", use_column_width=True)
+
+        Bx_new += Tx
+        By_new += Ty
