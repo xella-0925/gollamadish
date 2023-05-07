@@ -93,6 +93,7 @@ def _tri_prism_(bottom_lower=(0, 0, 0), side_length=5, side=4, two=2):
         bottom_lower + [side, 0, 0], #bottom right back
         bottom_lower + [two, side, side_length],
         bottom_lower + [two, side, side_length],
+        bottom_lower + [two, side, side_length],
         bottom_lower + [two, 0, side_length],
         bottom_lower + [two, 0, side_length],
         bottom_lower,
@@ -111,9 +112,14 @@ def main():
     transformation_type = st.sidebar.selectbox("Select Transformation Type", transformation_types)
 
     angle = st.sidebar.slider("Rotation Angle", -180.0, 180.0, step=1.0)
-    translation_x = st.sidebar.slider("Translation X", -5.0, 5.0, step=0.1, value=0.0)
-    translation_y = st.sidebar.slider("Translation Y", -5.0, 5.0, step=0.1, value=0.0)
-    translation_z = st.sidebar.slider("Translation Z", -5.0, 5.0, step=0.1, value=0.0)
+
+    if transformation_type == "Translate":
+        translation_x = st.sidebar.slider("Translation X", -5.0, 5.0, step=0.1, value=0.0)
+        translation_y = st.sidebar.slider("Translation Y", -5.0, 5.0, step=0.1, value=0.0)
+        translation_z = st.sidebar.slider("Translation Z", -5.0, 5.0, step=0.1, value=0.0)
+        translation = (translation_x, translation_y, translation_z)
+    else:
+        translation = (0.0, 0.0, 0.0)
 
     if object_type == "Rectangle":
         init_object = _rectangle_(side_length=5, length=-4)
@@ -128,7 +134,6 @@ def main():
         if transformation_type == "Rotate":
             transformed_object = session.run(rotate_obj(points, np.radians(angle)))
         elif transformation_type == "Translate":
-            translation = [translation_x, translation_y, translation_z]
             transformed_object = session.run(translate_obj(points, translation))
 
     _plt_basic_object_(transformed_object)
