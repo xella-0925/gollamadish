@@ -13,7 +13,7 @@ uploaded_file = st.sidebar.file_uploader("Choose an image", type=['jpg', 'jpeg',
 
 if uploaded_file is not None:
     # Read image
-    img_ = cv2.imdecode(np.fromstring(uploaded_file.read(), np.uint8), 1)
+    img_ = cv2.imdecode(np.frombuffer(uploaded_file.read(), np.uint8), 1)
     img_ = cv2.cvtColor(img_, cv2.COLOR_BGR2RGB)
     rows, cols, dims = img_.shape
 
@@ -97,35 +97,35 @@ if uploaded_file is not None:
         y = st.sidebar.slider("Vertical Shift", -200, 200, 50)
         result = translate(img_, rows, cols, x, y)
         plt_grph(result)
-        st.pyplot(translated_img_)
+        st.pyplot()
 
     elif option == "Scaling":
         x = st.sidebar.slider("Horizontal Scaling Factor", 0.1, 5.0, 1.5, 0.1)
         y = st.sidebar.slider("Vertical Scaling Factor", 0.1, 5.0, 1.8, 0.1)
         result = scaling(img_, rows, cols, x, y)
         plt_grph(result)
-        st.pyplot(scaled_img_)
+        st.pyplot()
 
     elif option == "Rotation":
         angle = st.sidebar.slider("Angle of Rotation", -180, 180, 10)
         result = rotate(img_, rows, cols, angle)
         plt_grph(result)
-        st.pyplot(rotated_img_)
+        st.pyplot()
 
     elif option == "Flip":
         axis = st.sidebar.slider("Flip Axis", 0, 1, 1)
         result = flip(img_, axis)
         plt_grph(result)
-        st.pyplot(img_flipped_)
+        st.pyplot()
 
     elif option == "Shear (X)":
         factor = st.sidebar.slider("Shear Factor", -1.0, 1.0, 0.2, 0.01)
         result = shear_x(img_, rows, cols, factor)
         plt_grph(result)
-        st.pyplot(sheared_img_x)
+        st.pyplot()
 
     elif option == "Shear (Y)":
         factor = st.sidebar.slider("Shear Factor", -1.0, 1.0, 0.2, 0.01)
         result = shear_y(img_, rows, cols, factor)
         plt_grph(result)
-        st.pyplot(sheared_img_y)
+        st.pyplot()
