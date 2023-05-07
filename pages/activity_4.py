@@ -75,7 +75,6 @@ def _right_tri_(bottom_lower=(0, 0, 0), side_length=3):
     return points
 
 # PYRAMID
-# PYRAMID
 
 def _tri_prism_(bottom_lower=(0, 0, 0), side_length=5, side=4, two=2):
     bottom_lower = np.array(bottom_lower)
@@ -101,13 +100,13 @@ def main():
     object_types = ["Rectangle", "Triangle", "Pyramid"]
     object_type = st.sidebar.selectbox("Select Object Type", object_types)
 
-    angle = st.slider("Rotation Angle", -180.0, 180.0, step=1.0)
+    angle = st.sidebar.slider("Rotation Angle", -180.0, 180.0, step=1.0)
 
     if object_type == "Rectangle":
         init_object = _rectangle_(side_length=5, length=-4)
-    elif object_type == "Triangle":
+    elif object_type == "Right Triangle":
         init_object = _right_tri_(side_length=3)
-    elif object_type == "Pyramid":
+    elif object_type == "Triangular Prism":
         init_object = _tri_prism_(side_length=5, side=4, two=2)
 
     points = tf.constant(init_object, dtype=tf.float32)
