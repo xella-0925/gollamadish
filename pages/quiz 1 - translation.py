@@ -33,12 +33,12 @@ if uploaded_file is not None:
 
     no_of_imgs = st.sidebar.slider("Number of Images:", min_value=1, max_value=10, value=1, step=1)
 
-    Bx_new = Bx_old + Tx
-    By_new = By_old + Ty
+    Bx_new = Bx_old
+    By_new = By_old
 
     for no_of_tests in range(no_of_imgs):
-        old_img = translate(img_, rows, cols, Bx_old, By_old)
-        st.image(old_img, caption="Old Image", use_column_width=True)
-
         new_img = translate(img_, rows, cols, Bx_new, By_new)
         st.image(new_img, caption="New Image", use_column_width=True)
+
+        Bx_new += Tx
+        By_new += Ty
