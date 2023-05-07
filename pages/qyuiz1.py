@@ -39,8 +39,8 @@ if uploaded_file is not None:
     st.image(img_, caption="Original Image", use_column_width=True)
 
     for no_of_tests in range(no_of_imgs):
-        new_img = translate(img_, rows, cols, Bx_new, By_new)
-        st.image(new_img, caption=f"New Image - Tx: {Tx}, Ty: {Ty}", use_column_width=True)
+       new_img = translate(img_, rows, cols, Bx_new, By_new)
+        st.image(new_img, caption=f"New Image {no_of_tests+1}", use_column_width=True)
 
         Bx_new += Tx
         By_new += Ty
