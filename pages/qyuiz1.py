@@ -16,7 +16,7 @@ st.title("Quiz 1 - Translation")
 st.set_option('deprecation.showPyplotGlobalUse', False)
 
 # Sidebar file uploader widget
-st.sidebar.header("Image Transformations")
+st.sidebar.header("Image Translation (Old - New")
 uploaded_file = st.sidebar.file_uploader("Choose an image", type=['jpg', 'jpeg', 'png'])
 
 if uploaded_file is not None:
