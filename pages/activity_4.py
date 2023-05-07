@@ -9,9 +9,13 @@ import tensorflow as tf
 tf.compat.v1.disable_eager_execution()
 
 def rotate_obj(points, angle):
-    rotation_matrix = tf.stack([[tf.cos(angle), tf.sin(angle), 0],[-tf.sin(angle), tf.cos(angle), 0],[0, 0, 1]])
+    rotation_matrix = tf.stack([
+        [tf.cos(angle), tf.sin(angle), 0],
+        [-tf.sin(angle), tf.cos(angle), 0],
+        [0, 0, 1]
+    ])
     rotate_object = tf.matmul(tf.cast(points, tf.float32), tf.cast(rotation_matrix, tf.float32))
-return rotate_object
+    return rotate_object
 
 def plt_basic_object(points):
     tri = Delaunay(points).convex_hull
@@ -20,25 +24,27 @@ def plt_basic_object(points):
     ax = fig.add_subplot(111, projection='3d')
     S = ax.plot_trisurf(points[:, 0], points[:, 1], points[:, 2], triangles=tri, shade=True, cmap=cm.rainbow, lw=0.5)
 
-    ax.set_xlim3d(-5, 5) # manages the width of the shape
+    ax.set_xlim3d(-5, 5)  # manages the width of the shape
     ax.set_ylim3d(-5, 5)
-    ax.set_zlim3d(-5, 5) # height
+    ax.set_zlim3d(-5, 5)  # height
 
-#RECTANGLE
 def rectangle(bottom_lower=(0, 0, 0), side_length=5, length=-4):
-bottom_lower = np.array(bottom_lower)
+    bottom_lower = np.array(bottom_lower)
 
-points = np.vstack([    bottom_lower,    bottom_lower + [0, side_length, 0],
-    bottom_lower + [length, side_length, 0],
-    bottom_lower + [length, 0, 0],
-    bottom_lower + [0, 0, side_length],
-    bottom_lower + [0, side_length, side_length],
-    bottom_lower + [length, side_length, side_length],
-    bottom_lower + [length, 0, side_length],
-    bottom_lower,
-])
+    points = np.vstack([
+        bottom_lower,
+        bottom_lower + [0, side_length, 0],
+        bottom_lower + [length, side_length, 0],
+        bottom_lower + [length, 0, 0],
+        bottom_lower + [0, 0, side_length],
+        bottom_lower + [0, side_length, side_length],
+        bottom_lower + [length, side_length, side_length],
+        bottom_lower + [length, 0, side_length],
+        bottom_lower,
+    ])
 
-return points
+    return points
+
 init_rectangle_ = rectangle(side_length=3)
 points = tf.constant(init_rectangle_, dtype=tf.float32)
 
@@ -46,39 +52,41 @@ plt_basic_object(init_rectangle_)
 plt.show()
 
 def translate_obj(points, amount):
-return tf.add(points, amount)
+    return tf.add(points, amount)
 
 translation_amount = tf.constant([1, 2, 2], dtype=tf.float32)
 translated_object = translate_obj(points, translation_amount)
 
 with tf.compat.v1.Session() as session:
-translated_rectangle = session.run(translated_object)
+    translated_rectangle = session.run(translated_object)
 
 plt_basic_object(translated_rectangle)
 plt.show()
 
 with tf.compat.v1.Session() as session:
-rotated_object = session.run(rotate_obj(init_rectangle_, 75))
+    rotated_object = session.run(rotate_obj(init_rectangle_, 75))
 
 plt_basic_object(rotated_object)
 plt.show()
 
-#PYRAMID
+# PYRAMID
 def tri_prism(bottom_lower=(0, 0, 0), side_length=5, side=4, two=2):
-bottom_lower = np.array(bottom_lower)
+    bottom_lower = np.array(bottom_lower)
 
+    points = np.vstack([
+        bottom_lower,
+        bottom_lower + [0, side, 0],
+        bottom_lower + [side, side, 0],  # bottom left back
+        bottom_lower + [side, 0, 0],  # bottom right back
+        bottom_lower + [two, side, side_length],
+        bottom_lower + [two, side, side_length],
+        bottom_lower + [two, 0, side_length],
+        bottom_lower + [two, 0, side_length],
+        bottom_lower,
+    ])
 
-points = np.vstack([    bottom_lower,    bottom_lower + [0, side, 0],
-    bottom_lower + [side, side, 0], # bottom left back
-    bottom_lower + [side, 0, 0], # bottom right back
-    bottom_lower + [two, side, side_length],
-    bottom_lower + [two, side, side_length],
-    bottom_lower + [two, 0, side_length],
-    bottom_lower + [two, 0, side_length],
-    bottom_lower,
-])
+    return points
 
-return points
 init_tri_prism_ = tri_prism(side_length=3)
 points = tf.constant(init_tri_prism_, dtype=tf.float32)
 
@@ -86,40 +94,41 @@ plt_basic_object(init_tri_prism_)
 plt.show()
 
 def translate_obj(points, amount):
-return tf.add(points, amount)
+    return tf.add(points, amount)
 
 translation_amount = tf.constant([1, 2, 2], dtype=tf.float32)
 translated_object = translate_obj(points, translation_amount)
 
 with tf.compat.v1.Session() as session:
-translated_tri_prism_ = session.run(translated_object)
+    translated_tri_prism_ = session.run(translated_object)
 
 plt_basic_object(translated_tri_prism_)
 plt.show()
 
 with tf.compat.v1.Session() as session:
-rotated_object = session.run(rotate_obj(init_tri_prism_, 75))
+    rotated_object = session.run(rotate_obj(init_tri_prism_, 75))
 
 plt_basic_object(rotated_object)
 plt.show()
 
-
 def right_tri(bottom_lower=(0, 0, 0), side_length=3):
-bottom_lower = np.array(bottom_lower)
+    bottom_lower = np.array(bottom_lower)
 
+    points = np.vstack([
+        bottom_lower,
+        bottom_lower + [0, side_length, 0],
+        bottom_lower + [side_length, side_length, 0],
+        bottom_lower + [0, 0, side_length],
+        bottom_lower + [0, side_length, side_length],
+        bottom_lower + [side_length, 0, 0],
+        bottom_lower + [side_length, 0, 0],
+        bottom_lower + [side_length, 0, 0],
+        bottom_lower + [0, 0, side_length],
+        bottom_lower,
+    ])
 
-points = np.vstack([    bottom_lower,    bottom_lower + [0, side_length, 0],
-    bottom_lower + [side_length, side_length, 0],
-    bottom_lower + [0, 0, side_length],
-    bottom_lower + [0, side_length, side_length],
-    bottom_lower + [side_length, 0, 0],
-    bottom_lower + [side_length, 0, 0],
-    bottom_lower + [side_length, 0, 0],
-    bottom_lower + [0, 0, side_length],
-    bottom_lower,
-])
+    return points
 
-return points
 init_right_tri_ = right_tri(side_length=5)
 points = tf.constant(init_right_tri_, dtype=tf.float32)
 
@@ -127,37 +136,40 @@ plt_basic_object(init_right_tri_)
 plt.show()
 
 def translate_obj(points, amount):
-return tf.add(points, amount)
+    return tf.add(points, amount)
 
 translation_amount = tf.constant([1, 2, 2], dtype=tf.float32)
 translated_object = translate_obj(points, translation_amount)
 
 with tf.compat.v1.Session() as session:
-translated_right_tri = session.run(translated_object)
+    translated_right_tri = session.run(translated_object)
 
 plt_basic_object(translated_right_tri)
 plt.show()
 
 with tf.compat.v1.Session() as session:
-rotated_object = session.run(rotate_obj(init_right_tri_, 75))
+    rotated_object = session.run(rotate_obj(init_right_tri_, 75))
 
 plt_basic_object(rotated_object)
 plt.show()
 
 def isosceles_tri(bottom_lower=(0, 0, 0), side_length=5, negative=-4, four=4):
-bottom_lower = np.array(bottom_lower)
+    bottom_lower = np.array(bottom_lower)
 
-points = np.vstack([    bottom_lower,    bottom_lower + [four, side_length, 0],
-    bottom_lower + [negative, side_length, 0],
-    bottom_lower + [0, 0, 0],
-    bottom_lower + [0, 0, side_length],
-    bottom_lower + [four, side_length, side_length],
-    bottom_lower + [negative, side_length, side_length],
-    bottom_lower + [0, 0, side_length],
-    bottom_lower,
-])
+    points = np.vstack([
+        bottom_lower,
+        bottom_lower + [four, side_length, 0],
+        bottom_lower + [negative, side_length, 0],
+        bottom_lower + [0, 0, 0],
+        bottom_lower + [0, 0, side_length],
+        bottom_lower + [four, side_length, side_length],
+        bottom_lower + [negative, side_length, side_length],
+        bottom_lower + [0, 0, side_length],
+        bottom_lower,
+    ])
 
-return points
+    return points
+
 init_isosceles_tri_ = isosceles_tri(side_length=3)
 points = tf.constant(init_isosceles_tri_, dtype=tf.float32)
 
@@ -165,19 +177,20 @@ plt_basic_object(init_isosceles_tri_)
 plt.show()
 
 def translate_obj(points, amount):
-return tf.add(points, amount)
+    return tf.add(points, amount)
 
 translation_amount = tf.constant([1, 2, 2], dtype=tf.float32)
 translated_object = translate_obj(points, translation_amount)
 
 with tf.compat.v1.Session() as session:
-translated_isosceles_tri_ = session.run(translated_object)
+    translated_isosceles_tri_ = session.run(translated_object)
 
 plt_basic_object(translated_isosceles_tri_)
 plt.show()
 
 with tf.compat.v1.Session() as session:
-rotated_object = session.run(rotate_obj(init_isosceles_tri_, 75))
+    rotated_object = session.run(rotate_obj(init_isosceles_tri_, 75))
 
 plt_basic_object(rotated_object)
 plt.show()
+
