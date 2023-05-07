@@ -40,7 +40,7 @@ if uploaded_file is not None:
 
     for no_of_tests in range(no_of_imgs):
        new_img = translate(img_, rows, cols, Bx_new, By_new)
-        st.image(new_img, caption=f"New Image {no_of_tests+1}", use_column_width=True)
+       st.image(new_img, caption=f"New Image {no_of_tests+1}", use_column_width=True)
 
-        Bx_new += Tx
-        By_new += Ty
+       Bx_new += Tx
+       By_new += Ty
