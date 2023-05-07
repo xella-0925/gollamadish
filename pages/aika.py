@@ -110,8 +110,11 @@ def main():
 
     transformation_types = ["Rotate", "Translate"]
     transformation_type = st.sidebar.selectbox("Select Transformation Type", transformation_types)
-
-    angle = st.sidebar.slider("Rotation Angle", -180.0, 180.0, step=1.0)
+    
+    if transformation_type == "Rotate":
+    angle = st.sidebar.slider("Rotation Angle", -360.0, 360.0, step=1.0)
+    else:
+        angle = (0.0)
 
     if transformation_type == "Translate":
         translation_x = st.sidebar.slider("Translation X", -5.0, 5.0, step=0.1, value=0.0)
