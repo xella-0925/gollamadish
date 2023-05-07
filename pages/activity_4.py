@@ -53,10 +53,48 @@ def _rectangle_(bottom_lower=(0, 0, 0), side_length=5, length=-4):
 
     return points
 
+# RIGHT TRIANGLE
+def _right_tri_(bottom_lower=(0, 0, 0), side_length=3):
+    
+    bottom_lower = np.array(bottom_lower)
+
+    points= np.vstack([
+    bottom_lower,
+    bottom_lower + [0, side_length, 0],
+    bottom_lower + [side_length, side_length, 0],
+    bottom_lower + [0, 0, side_length],
+    bottom_lower + [0, side_length, side_length],
+    bottom_lower + [side_length, 0, 0],
+    bottom_lower + [side_length, 0, 0],
+    bottom_lower + [side_length, 0, 0],
+    bottom_lower + [0, 0, side_length],
+
+    bottom_lower,
+    ])
+
+    return points
+# RECTANGULAR PYRAMID
+
+def _isosceles_tri_ (bottom_lower=(0, 0, 0), side_length=5, negative=-4, four=4):
+    bottom_lower = np.array(bottom_lower)
+
+    points = np.vstack([
+        bottom_lower,
+        bottom_lower + [four, side_length, 0],
+        bottom_lower + [negative, side_length, 0],
+        bottom_lower + [0, 0, 0],
+        bottom_lower + [0, 0, side_length],
+        bottom_lower + [four, side_length, side_length],
+        bottom_lower + [negative, side_length, side_length],
+        bottom_lower + [0, 0, side_length],
+        bottom_lower,
+    ])
+
+    return points
 
 def main():
     st.title("3D Object Rotation")
-
+    st.sidebar.header(" Image Transformations")
     object_types = ["Rectangle", "Triangle", "Pyramid"]
     object_type = st.selectbox("Select Object Type", object_types)
 
