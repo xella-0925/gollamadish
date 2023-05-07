@@ -73,4 +73,31 @@ elif option == "Translation":
 elif option == "Scaling":
     x = st.sidebar.slider("Horizontal Scaling Factor", 0.1, 5.0, 1.5, 0.1)
     y = st.sidebar.slider("Vertical Scaling Factor", 0.1, 5.0, 1.8, 0.1)
-    result = scaling(img_, rows, cols
+    result = scaling(img_, rows, cols, x, y)
+    plt_grph(result)
+    st.pyplot(plt)
+
+elif option == "Rotation":
+    angle = st.sidebar.slider("Angle of Rotation", -180, 180, 10)
+    result = rotate(img_, rows, cols, angle)
+    plt_grph(result)
+    st.pyplot(plt)
+
+elif option == "Flip":
+    axis = st.sidebar.slider("Flip Axis", 0, 1, 1)
+    result = flip(img_, axis)
+    plt_grph(result)
+    st.pyplot(plt)
+
+elif option == "Shear (X)":
+    factor = st.sidebar.slider("Shear Factor", -1.0, 1.0, 0.2, 0.01)
+    result = shear_x(img_, rows, cols, factor)
+    plt_grph(result)
+    st.pyplot(plt)
+
+elif option == "Shear (Y)":
+    factor = st.sidebar.slider("Shear Factor", -1.0, 1.0, 0.2, 0.01)
+    result = shear_y(img_, rows, cols, factor)
+    plt_grph(result)
+    st.pyplot(plt)
+
