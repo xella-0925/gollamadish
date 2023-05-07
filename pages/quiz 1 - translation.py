@@ -30,13 +30,13 @@ if uploaded_file is not None:
         return translated_img_
 
     no_of_imgs = st.sidebar.slider("Number of Images:", 0, 100, step=1)
-    
-    for no_of_tests in range(no_of_imgs):
-        Bx_old = st.sidebar.slider("Bx_old", 0, cols, step=1)
-        By_old = st.sidebar.slider("By_old", 0, rows, step=1)
 
-        Tx = st.sidebar.slider("Tx", -cols, cols, step=1)
-        Ty = st.sidebar.slider("Ty", -rows, rows, step=1)
+    for no_of_tests in range(no_of_imgs):
+        Bx_old = st.sidebar.slider(f"Bx_old_{no_of_tests}", 0, cols, step=1)
+        By_old = st.sidebar.slider(f"By_old_{no_of_tests}", 0, rows, step=1)
+
+        Tx = st.sidebar.slider(f"Tx_{no_of_tests}", -cols, cols, step=1)
+        Ty = st.sidebar.slider(f"Ty_{no_of_tests}", -rows, rows, step=1)
 
         Bx_new = Bx_old + Tx
         By_new = By_old + Ty
