@@ -1,8 +1,17 @@
 import numpy as np
 import cv2
-import matplotlib.pyplot as plt
-
 import streamlit as st
+
+def translate(img_, rows, cols, Bx, By):
+    translated_img_ = np.float32(([1, 0, Bx],
+                                 [0, 1, By],
+                                 [0, 0, 1]))
+
+    translated_img_ = cv2.warpPerspective(img_, translated_img_, (cols, rows))
+
+    return translated_img_ 
+
+# Streamlit app
 st.title("Quiz 1 - Translation")
 st.set_option('deprecation.showPyplotGlobalUse', False)
 
@@ -16,35 +25,20 @@ if uploaded_file is not None:
     img_ = cv2.cvtColor(img_, cv2.COLOR_BGR2RGB)
     rows, cols, dims = img_.shape
 
-    # Function to plot transformed image
-    def plt_grph(transformed_img_):
-        plt.axis('off')
-        plt.imshow(transformed_img_)
+    Bx_old = st.sidebar.number_input("Bx_old:", min_value=0, max_value=cols-1, step=1, value=0)
+    By_old = st.sidebar.number_input("By_old:", min_value=0, max_value=rows-1, step=1, value=0)
 
-    # Function to translate image and define its parameters
-    def translate(img_, rows, cols, x, y):
-        m_translation_ = np.float32([[1, 0, x],
-                                     [0, 1, y],
-                                     [0, 0, 1]])
-        translated_img_ = cv2.warpPerspective(img_, m_translation_, (cols, rows))
-        return translated_img_
+    Tx = st.sidebar.number_input("Tx:", min_value=-cols, max_value=cols, step=1, value=0)
+    Ty = st.sidebar.number_input("Ty:", min_value=-rows, max_value=rows, step=1, value=0)
 
-    no_of_imgs = st.sidebar.slider("Number of Images:", 0, 100, step=1)
+    no_of_imgs = st.sidebar.slider("Number of Images:", min_value=1, max_value=10, value=1, step=1)
+
+    Bx_new = Bx_old + Tx
+    By_new = By_old + Ty
 
     for no_of_tests in range(no_of_imgs):
-        Bx_old = st.sidebar.slider(f"Bx_old_{no_of_tests}", 0, cols, step=1)
-        By_old = st.sidebar.slider(f"By_old_{no_of_tests}", 0, rows, step=1)
-
-        Tx = st.sidebar.slider(f"Tx_{no_of_tests}", -cols, cols, step=1)
-        Ty = st.sidebar.slider(f"Ty_{no_of_tests}", -rows, rows, step=1)
-
-        Bx_new = Bx_old + Tx
-        By_new = By_old + Ty
-
         old_img = translate(img_, rows, cols, Bx_old, By_old)
-        plt.figure()
-        plt_grph(old_img)
+        st.image(old_img, caption="Old Image", use_column_width=True)
 
         new_img = translate(img_, rows, cols, Bx_new, By_new)
-        plt.figure()
-        plt_grph(new_img)
+        st.image(new_img, caption="New Image", use_column_width=True)
