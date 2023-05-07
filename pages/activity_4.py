@@ -75,21 +75,20 @@ def _right_tri_(bottom_lower=(0, 0, 0), side_length=3):
     return points
 
 # PYRAMID
-def _tri_prism_(bottom_lower=(0, 0, 0), side_length=5, two=2):
+# PYRAMID
+
+def _tri_prism_(bottom_lower=(0, 0, 0), side_length=5, side=4, two=2):
     bottom_lower = np.array(bottom_lower)
 
     points = np.vstack([
         bottom_lower,
-        bottom_lower + [0, side_length, 0],
-        bottom_lower + [side_length, side_length, 0],  # bottom left back
-        bottom_lower + [side_length, 0, 0],  # bottom right back
-        bottom_lower + [two, side_length, side_length],
-        bottom_lower + [side_length, side_length, side_length],  # top left back
-        bottom_lower + [side_length, 0, side_length],  # top right back
-        bottom_lower + [two, side_length, side_length],  # top left front
-        bottom_lower + [length, side_length, side_length],  # top right front
-        bottom_lower + [length, 0, side_length],  # bottom right front
-        bottom_lower + [0, 0, side_length],  # bottom left front
+        bottom_lower + [0, side, 0],
+        bottom_lower + [side, side, 0],#bottom left back
+        bottom_lower + [side, 0, 0], #bottom right back
+        bottom_lower + [two, side, side_length],
+        bottom_lower + [two, side, side_length],
+        bottom_lower + [two, 0, side_length],
+        bottom_lower + [two, 0, side_length],
         bottom_lower,
     ])
 
@@ -109,7 +108,7 @@ def main():
     elif object_type == "Triangle":
         init_object = _right_tri_(side_length=5)
     elif object_type == "Pyramid":
-        init_object = _tri_prism_(side_length=3)
+        init_object = _tri_prism_(side_length=5)
 
     points = tf.constant(init_object, dtype=tf.float32)
 
