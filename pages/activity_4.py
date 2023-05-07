@@ -21,6 +21,13 @@ def rotate_obj(points, angle):
     return rotate_object
 
 
+def translate_obj(points, translation):
+    translation_vector = tf.constant(translation, dtype=tf.float32)
+    translated_object = tf.add(tf.cast(points, tf.float32), translation_vector)
+
+    return translated_object
+
+
 def _plt_basic_object_(points):
     tri = Delaunay(points).convex_hull
 
@@ -53,37 +60,38 @@ def _rectangle_(bottom_lower=(0, 0, 0), side_length=5, length=-4):
 
     return points
 
+
 # RIGHT TRIANGLE
 def _right_tri_(bottom_lower=(0, 0, 0), side_length=3):
     
     bottom_lower = np.array(bottom_lower)
 
-    points= np.vstack([
-    bottom_lower,
-    bottom_lower + [0, side_length, 0],
-    bottom_lower + [side_length, side_length, 0],
-    bottom_lower + [0, 0, side_length],
-    bottom_lower + [0, side_length, side_length],
-    bottom_lower + [side_length, 0, 0],
-    bottom_lower + [side_length, 0, 0],
-    bottom_lower + [side_length, 0, 0],
-    bottom_lower + [0, 0, side_length],
-
-    bottom_lower,
+    points = np.vstack([
+        bottom_lower,
+        bottom_lower + [0, side_length, 0],
+        bottom_lower + [side_length, side_length, 0],
+        bottom_lower + [0, 0, side_length],
+        bottom_lower + [0, side_length, side_length],
+        bottom_lower + [side_length, 0, 0],
+        bottom_lower + [side_length, 0, 0],
+        bottom_lower + [side_length, 0, 0],
+        bottom_lower + [0, 0, side_length],
+        bottom_lower,
     ])
 
     return points
 
-# PYRAMID
 
+# PYRAMID
 def _tri_prism_(bottom_lower=(0, 0, 0), side_length=5, side=4, two=2):
     bottom_lower = np.array(bottom_lower)
 
     points = np.vstack([
         bottom_lower,
         bottom_lower + [0, side, 0],
-        bottom_lower + [side, side, 0],#bottom left back
+        bottom_lower + [side, side, 0],  # bottom left back
         bottom_lower + [side, 0, 0], #bottom right back
+        bottom_lower + [two, side, side_length],
         bottom_lower + [two, side, side_length],
         bottom_lower + [two, side, side_length],
         bottom_lower + [two, 0, side_length],
@@ -95,12 +103,26 @@ def _tri_prism_(bottom_lower=(0, 0, 0), side_length=5, side=4, two=2):
 
 
 def main():
-    st.title("3D Object Rotation")
-    st.sidebar.header(" Image Transformations")
-    object_types = ["Rectangle", "Triangle", "Pyramid"]
+    st.title("3D Object Transformation")
+    st.sidebar.header("Image Transformations")
+    object_types = ["Rectangle", "Right Triangle", "Triangular Prism"]
     object_type = st.sidebar.selectbox("Select Object Type", object_types)
 
-    angle = st.sidebar.slider("Rotation Angle", -180.0, 180.0, step=1.0)
+    transformation_types = ["Rotate", "Translate"]
+    transformation_type = st.sidebar.selectbox("Select Transformation Type", transformation_types)
+    
+    if transformation_type == "Rotate":
+        angle = st.sidebar.slider("Rotation Angle", -360.0, 360.0, step=1.0)
+    else:
+        angle = (0.0)
+
+    if transformation_type == "Translate":
+        translation_x = st.sidebar.slider("Translation X", -5.0, 5.0, step=0.1, value=0.0)
+        translation_y = st.sidebar.slider("Translation Y", -5.0, 5.0, step=0.1, value=0.0)
+        translation_z = st.sidebar.slider("Translation Z", -5.0, 5.0, step=0.1, value=0.0)
+        translation = (translation_x, translation_y, translation_z)
+    else:
+        translation = (0.0, 0.0, 0.0)
 
     if object_type == "Rectangle":
         init_object = _rectangle_(side_length=5, length=-4)
@@ -112,12 +134,14 @@ def main():
     points = tf.constant(init_object, dtype=tf.float32)
 
     with tf.compat.v1.Session() as session:
-        rotated_object = session.run(rotate_obj(points, np.radians(angle)))
+        if transformation_type == "Rotate":
+            transformed_object = session.run(rotate_obj(points, np.radians(angle)))
+        elif transformation_type == "Translate":
+            transformed_object = session.run(translate_obj(points, translation))
 
-    _plt_basic_object_(rotated_object)
+    _plt_basic_object_(transformed_object)
     st.pyplot(plt)
 
 
 if __name__ == "__main__":
     main()
-
