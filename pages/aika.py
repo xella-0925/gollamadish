@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 
 import streamlit as st
 st.title("Activity 3")
+st.set_option('deprecation.showPyplotGlobalUse', False)
 
 # Sidebar file uploader widget
 st.sidebar.header(" Image Transformations")
