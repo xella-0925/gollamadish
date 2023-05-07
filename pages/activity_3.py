@@ -1,114 +1,76 @@
-
-import streamlit as st
-import numpy as np
 import cv2
+import numpy as np
+import streamlit as st
 import matplotlib.pyplot as plt
-from PIL import Image
 
-st.set_option('deprecation.showPyplotGlobalUse', False)
-
-st.header("Activity 3 - Image Processing")
-
-# Sidebar for uploading image and selecting transformations
-st.sidebar.header("Image transformations")
-img_file = st.sidebar.file_uploader('Upload your files here', ['png', 'jpg', 'webp'], True)
-user_choice = st.sidebar.selectbox('Select a transformation to apply', ['Translation', 'Rotation', 'Scaling', 'Reflection', 'Shearing'])
-
-# Function for displaying image with matplotlib
-def visualize(img):
-    plt.imshow(img)
+# Function to plot transformed image
+def plt_grph(transformed_img_):
     plt.axis('off')
-    plt.tight_layout()
-    # return the plotted image as a numpy array
-    return np.array(plt.gcf().canvas.buffer_rgba())
+    plt.imshow(transformed_img_)
 
-# Function to check if file is a valid image
-def is_valid_image(file):
-    if file is not None and hasattr(file, "type") and file.type.split('/')[1] in ['png', 'jpg', 'webp']:
-        return True
-    return False
+# Function to translate image and define its parameters
+def translate(img_, rows, cols, x, y):
+    m_translation_ = np.float32([[1, 0, x],
+                                [0, 1, y],
+                                [0, 0, 1]])
+    translated_img_ = cv2.warpPerspective(img_, m_translation_, (cols, rows))
+    return translated_img_
 
-# Function for translation
-def translate(img_, rows, cols):
-    img_translated = np.float32([[1, 0, cols//4],
-                                 [0, 1, rows//4],
-                                 [0, 0, 1]])
-    img_translated = cv2.warpPerspective(img_, img_translated, (cols, rows))
-    return img_translated
+# Function to scale image and define its parameters
+def scaling(img_, rows, cols, x, y):
+    m_scaling_ = np.float32([[x, 0, 0],
+                             [0, y, 0],
+                             [0, 0, 1]])
+    scaled_img_ = cv2.warpPerspective(img_, m_scaling_, (int(cols*x), int(rows*y)))
+    return scaled_img_
 
-# Function for rotation
-def rotate(img_, rows, cols):
-    angle = np.radians(10)
-    m_rotated = np.float32([[np.cos(angle), -(np.sin(angle)), 0],
-                            [np.sin(angle), np.cos(angle), 0],
-                            [0, 0, 1]])
+# Function to rotate image and define its parameters
+def rotate(img_, rows, cols, angle):
+    m_rotation_ = cv2.getRotationMatrix2D((cols/2, rows/2), angle, 1)
+    rotated_img_ = cv2.warpAffine(img_, m_rotation_, (cols, rows))
+    return rotated_img_
 
-    rotated_img = cv2.warpPerspective(img_, m_rotated, (int(cols), int(rows)))
-    return rotated_img
+# Function to flip image and define its parameters
+def flip(img_, axis):
+    img_flipped_ = cv2.flip(img_, axis)
+    return img_flipped_
 
-# Function for scaling
-def scale(img_, rows, cols):
-    m_scaling = np.float32([[1.5, 0, 0],
-                            [0, 1.8, 0],
-                            [0, 0, 1]])
-    scaled_img = cv2.warpPerspective(img_, m_scaling, (cols*2, rows*2))
-    return scaled_img
-
-# Function for reflection
-def reflect(img_, rows, cols):
-    m_reflection = np.float32([[1, 0, 0],
-                               [0, -1, rows],
+# Function to shear image (x) and define its parameters
+def shear_x(img_, rows, cols, factor):
+    m_shearing_x = np.float32([[1, factor, 0],
+                               [0, 1, 0],
                                [0, 0, 1]])
-    reflected_img = cv2.warpPerspective(img_, m_reflection, (cols, rows))
-    return reflected_img
+    sheared_img_x = cv2.warpPerspective(img_, m_shearing_x, (int(cols*1.5), int(rows*1.5)))
+    return sheared_img_x
 
-# Function for shearing
-def shear(img_, rows, cols):
-    m_sheared = np.float32([[1, 0.2, 0],
-                            [0.3, 1, 0],
-                            [0, 0, 1]])
-    sheared_img = cv2.warpPerspective(img_, m_sheared, (cols, rows))
-    return sheared_img
+# Function to shear image (y) and define its parameters
+def shear_y(img_, rows, cols, factor):
+    m_shearing_y = np.float32([[1, 0, 0],
+                               [factor, 1, 0],
+                               [0, 0, 1]])
+    sheared_img_y = cv2.warpPerspective(img_, m_shearing_y, (int(cols*1.5), int(rows*1.5)))
+    return sheared_img_y
 
-# Main code for processing image and displaying transformed images
-if img_file is not None and is_valid_image(img_file):
-    uploaded_img = Image.open(img_file)
-    uploaded_img = np.array(uploaded_img)
-    rows, cols, dims = uploaded_img.shape
+# Sidebar slider widget
+option = st.sidebar.selectbox("Select Transformation", ["Original Image",
+                                                        "Translation",
+                                                        "Scaling",
+                                                        "Rotation",
+                                                        "Flip",
+                                                        "Shear (X)",
+                                                        "Shear (Y)"])
 
-    st.write('Original Image:')
-    st.image(uploaded_img, use_column_width=True)
+if option == "Original Image":
+    st.image(img_, use_column_width=True)
 
-    if user_choice == 'Translation':
-        st.write('Translated Image:')
-        img_processed = translate(uploaded_img, rows, cols)
-        st.image(img_processed, use_column_width=True)
+elif option == "Translation":
+    x = st.sidebar.slider("Horizontal Shift", -200, 200, 100)
+    y = st.sidebar.slider("Vertical Shift", -200, 200, 50)
+    result = translate(img_, rows, cols, x, y)
+    plt_grph(result)
+    st.pyplot(plt)
 
-    elif user_choice == 'Rotation':
-        st.write('Rotated Image:')
-        img_processed = rotate(uploaded_img, rows, cols)
-        st.image(img_processed, use_column_width=True)
-
-    elif user_choice == 'Scaling':
-        st.write('Scaled Image:')
-        img_processed = scale(uploaded_img, rows, cols)
-        st.image(img_processed, use_column_width=True)
-
-    elif user_choice == 'Reflection':
-        st.write('Reflected Image:')
-        img_processed = reflect(uploaded_img, rows, cols)
-        st.image(img_processed, use_column_width=True)
-
-    elif user_choice == 'Shearing':
-        st.write('Sheated Image:')
-        img_processed = shear(uploaded_img, rows, cols)
-        st.image(img_processed, use_column_width=True)
-
-    if user_choice != 'Select a transformation to apply':
-        st.write('Processed Image:')
-        st.image(img_processed, use_column_width=True)
-    else:
-        st.write('No transformation selected')
-else:
-    st.write('No image selected or invalid file format')
-
+elif option == "Scaling":
+    x = st.sidebar.slider("Horizontal Scaling Factor", 0.1, 5.0, 1.5, 0.1)
+    y = st.sidebar.slider("Vertical Scaling Factor", 0.1, 5.0, 1.8, 0.1)
+    result = scaling(img_, rows, cols
