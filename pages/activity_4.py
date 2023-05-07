@@ -104,11 +104,11 @@ def main():
     angle = st.slider("Rotation Angle", -180.0, 180.0, step=1.0)
 
     if object_type == "Rectangle":
-        init_object = _rectangle_(side_length=3)
+        init_object = _rectangle_(side_length=5, length=-4)
     elif object_type == "Triangle":
-        init_object = _right_tri_(side_length=5)
+        init_object = _right_tri_(side_length=3)
     elif object_type == "Pyramid":
-        init_object = _tri_prism_(side_length=5)
+        init_object = _tri_prism_(side_length=5, side=4, two=2)
 
     points = tf.constant(init_object, dtype=tf.float32)
 
