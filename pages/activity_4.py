@@ -9,8 +9,8 @@ import streamlit as st
 import tensorflow as tf
 tf.compat.v1.disable_eager_execution()
 
-
-def rotate_obj(points, angle):
+# Function to rotate the object
+def rotate_obj(points, angle): #rotates the object by applying a rotation matrix.
     rotation_matrix = tf.stack([
         [tf.cos(angle), tf.sin(angle), 0],
         [-tf.sin(angle), tf.cos(angle), 0],
@@ -20,14 +20,15 @@ def rotate_obj(points, angle):
 
     return rotate_object
 
-
-def translate_obj(points, translation):
+# Function to translate the object in 3D 
+def translate_obj(points, translation): #translates the object by adding a translation vector.
     translation_vector = tf.constant(translation, dtype=tf.float32)
     translated_object = tf.add(tf.cast(points, tf.float32), translation_vector)
 
     return translated_object
 
-
+# Function to plot the basic object using Delaunay triangulation
+# Plots the basic object using Delaunay triangulation.
 def _plt_basic_object_(points):
     tri = Delaunay(points).convex_hull
 
