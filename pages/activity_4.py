@@ -44,6 +44,7 @@ def _plt_basic_object_(points):
 
 
 # RECTANGLE
+#  defines a rectangular object by specifying the corner points.
 def _rectangle_(bottom_lower=(0, 0, 0), side_length=5, length=-4):
     bottom_lower = np.array(bottom_lower)
 
@@ -63,6 +64,7 @@ def _rectangle_(bottom_lower=(0, 0, 0), side_length=5, length=-4):
 
 
 # RIGHT TRIANGLE
+#  defines a right triangle object by specifying the corner points.
 def _right_tri_(bottom_lower=(0, 0, 0), side_length=3):
     
     bottom_lower = np.array(bottom_lower)
@@ -84,6 +86,7 @@ def _right_tri_(bottom_lower=(0, 0, 0), side_length=3):
 
 
 # PYRAMID
+# defines a triangular prism object by specifying the corner points and additional dimensions.
 def _tri_prism_(bottom_lower=(0, 0, 0), side_length=5, side=4, two=2):
     bottom_lower = np.array(bottom_lower)
 
@@ -106,17 +109,20 @@ def _tri_prism_(bottom_lower=(0, 0, 0), side_length=5, side=4, two=2):
 def main():
     st.title("3D Object Transformation")
     st.sidebar.header("Image Transformations")
+    # llows the user to select an object type 
     object_types = ["Rectangle", "Right Triangle", "Triangular Prism"]
     object_type = st.sidebar.selectbox("Select Object Type", object_types)
-
+    
+    # allows the user to select a transformation type
     transformation_types = ["Rotate", "Translate"]
     transformation_type = st.sidebar.selectbox("Select Transformation Type", transformation_types)
     
+    # displays a slider for selecting the rotation angle if user choose "rotate"
     if transformation_type == "Rotate":
         angle = st.sidebar.slider("Rotation Angle", -360.0, 360.0, step=1.0)
     else:
         angle = (0.0)
-
+    #  displays sliders for selecting the translation values along the X, Y, and Z axes if user choose "translate"
     if transformation_type == "Translate":
         translation_x = st.sidebar.slider("Translation X", -5.0, 5.0, step=0.1, value=0.0)
         translation_y = st.sidebar.slider("Translation Y", -5.0, 5.0, step=0.1, value=0.0)
@@ -140,8 +146,8 @@ def main():
         elif transformation_type == "Translate":
             transformed_object = session.run(translate_obj(points, translation))
 
-    _plt_basic_object_(transformed_object)
-    st.pyplot(plt)
+    _plt_basic_object_(transformed_object) 
+    st.pyplot(plt) # displays transformed object
 
 
 if __name__ == "__main__":
