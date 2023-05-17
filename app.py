@@ -5,6 +5,7 @@ from PIL import Image
 import cv2
 
 st.title("MIDTERM TEST in COMPUTER GRAPHICS AND VISUAL COMPUTING (CC 221)")
+st.markdown('#')
 st.subheader("Submitted by:")
 st.subheader("ANGELIKA MARIE NAVA")
 st.subheader("MARIANE FAITH TORREVERDE")
